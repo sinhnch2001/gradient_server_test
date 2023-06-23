@@ -11,7 +11,7 @@ import json
 # https://github.com/huggingface/evaluate/issues/428
 from datasets import DownloadConfig
 
-num_slot_domain = json.load(open("./gradients.baselinev1.dialogstate/data/processed_schema/num_slot_domain.json"))
+num_slot_domain = json.load(open("./data/processed_schema/num_slot_domain.json"))
 
 def formatstring(input_string, metric_name):
 
