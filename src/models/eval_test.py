@@ -10,6 +10,7 @@ from transformers import PreTrainedTokenizerFast
 from transformers import T5ForConditionalGeneration, AutoModel, AutoTokenizer, AutoModelForSeq2SeqLM
 from accelerate import Accelerator
 from accelerate.logging import get_logger
+import json
 logger = get_logger(__name__)
 
 
