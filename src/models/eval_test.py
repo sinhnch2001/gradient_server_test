@@ -75,13 +75,13 @@ def main(args):
     }
     if args.module == "res":
         dataloaders = ResDataLoader(**dataloader_args).__call__()
+        metrics_name = ['rouge', "bleu"]
     elif args.module == "dst":
         dataloaders = StateDataLoader(**dataloader_args).__call__()
+        metrics_name = ['rouge', "bleu", "rsa", "jga"]
 
     model, dataloaders['test'], tokenizer = accelerator.prepare(model, dataloaders['test'], tokenizer)
 
-
-    metrics_name = ['rouge', "bleu", "rsa", "jga"]
     evaluator = Evaluation(eval_dataloaders=dataloaders['test'],
                            ignore_pad_token_for_loss=args.ignore_pad_token_for_loss,
                            metrics_name=metrics_name,
