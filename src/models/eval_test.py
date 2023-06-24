@@ -20,6 +20,7 @@ def parse_args(args):
     parser.add_argument('--ignore_pad_token_for_loss', type=bool, default=True, help="ignore_pad_token_for_loss")
     parser.add_argument('--model_name', type=str, default="google/flan-t5-base", help="model name")
     parser.add_argument('--path_to_save_dir', type=str, help="Path to the save directory json file")
+    parser.add_argument('--log_input_label_predict', type=str, help="Path to the save directory json file")
     parser.add_argument('--max_target_length', type=int, default=80, help="Max target length")
     parser.add_argument('--batch_size', type=int, default=8, help="Batch size for the dataloader")
     parser.add_argument('--seed', type=int, default=42, help="A seed for reproducible training.")
@@ -76,9 +77,12 @@ def main(args):
     if args.module == "res":
         dataloaders = ResDataLoader(**dataloader_args).__call__()
         metrics_name = ['rouge', "bleu"]
-    elif args.module == "dst":
+    elif args.module == "dst_tod":
         dataloaders = StateDataLoader(**dataloader_args).__call__()
         metrics_name = ['rouge', "bleu", "rsa", "jga"]
+    elif args.module == "dst_odd":
+        dataloaders = StateDataLoader(**dataloader_args).__call__()
+        metrics_name = ["f1"]
 
     model, dataloaders['test'], tokenizer = accelerator.prepare(model, dataloaders['test'], tokenizer)
 
@@ -91,11 +95,26 @@ def main(args):
 
 
     if args.with_tracking:
-        result, total_loss_eval = evaluator.eval(accelerator=accelerator,
-                                                 tokenizer=tokenizer, model=model)
+        result, total_loss_eval, label, predict = evaluator.eval(accelerator=accelerator,
+                                                 tokenizer=tokenizer, model=model, log_label_predict=True)
     else:
-        result = evaluator.eval(accelerator=accelerator,
-                                tokenizer=tokenizer, model=model)
+        result, label, predict = evaluator.eval(accelerator=accelerator,
+                                tokenizer=tokenizer, model=model, log_label_predict=True)
+    test = json.load(open(args.test_files))
+    ild_list = []
+    for i in range(len(label)):
+        ild = {
+            "input": test[i]['instruction'] \
+                    .replace('{list_user_action}', test[i]['list_user_action'].strip()) \
+                    .replace('{context}', test[i]['context'].strip()) \
+                    .replace('{current_query}', test[i]['current_query'].strip()) \
+                    .replace('{ontology}', test[i]['ontology'].strip()),
+            "label": label[i],
+            "predict": predict[i]
+        }
+        ild_list.append(ild)
+    with open(args.log_input_label_predict, 'w') as f:
+        json.dump(ild_list, f, indent=4)
 
     for k,v in result.items():
         print(k,":",v)

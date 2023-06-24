@@ -44,7 +44,7 @@ class Evaluation:
         self.max_target_length = max_target_length
 
     @timeit
-    def eval(self, accelerator, tokenizer, model):
+    def eval(self, accelerator, tokenizer, model, log_label_predict=False):
         accelerator.wait_for_everyone()
         accelerator.print("\n\n**** Starting evaluation ****\n")
         model.eval()
@@ -55,7 +55,7 @@ class Evaluation:
         }
         metrics_list = {}
         for metric_name in self.metrics_name:
-            metrics_list[metric_name]=(Metric(metric_name))
+            metrics_list[metric_name]=(Metric(metric_name=metric_name))
 
         total_loss_eval = 0
         results = dict()
@@ -109,14 +109,19 @@ class Evaluation:
 
         result_list = {}
         for metric_name in metrics_list.keys():
-            result = metrics_list[metric_name].compute()
+            result, label, predict = metrics_list[metric_name].compute()
+
             if result is not None:
                 results.update(result)
             # result_list[metric_name] = result
 
         print(f"** Evaluation of process {accelerator.process_index} completed **")
         if self.with_tracking:
+            if log_label_predict:
+                return results, total_loss_eval, label, predict
             return results, total_loss_eval
+        if log_label_predict:
+            return results, label, predict
         return results
 
     def postprocess_text(self, preds, labels):

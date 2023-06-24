@@ -10,6 +10,7 @@ import json
 
 # https://github.com/huggingface/evaluate/issues/428
 from datasets import DownloadConfig
+from sklearn.metrics import f1_score
 
 num_slot_domain = json.load(open("./data/processed_schema/num_slot_domain.json"))
 
@@ -89,6 +90,10 @@ class Metric:
             self.metric.add_batch(
                 predictions=decoded_preds,
                 references=decoded_labels)
+        elif self.metric_name == "f1":
+            for i in range(len(decoded_preds)):
+                self.predict_full.append(decoded_preds[i])
+                self.label_full.append(decoded_labels[i])
         else:
             for i in range(len(decoded_preds)):
                 p_full, p_slot = formatstring(decoded_preds[i], self.metric_name)
@@ -97,7 +102,6 @@ class Metric:
                 self.label_full.append(l_full)
                 self.predict_slot.append(p_slot)
                 self.label_slot.append(l_slot)
-                
 
     def compute(self):
         if self.metric_name == "rouge":
@@ -127,8 +131,11 @@ class Metric:
             result_bleurt["scores"] = round(np.mean(result_bleurt["scores"])*100, 4)
             result = result_bleurt
 
-        elif self.metric_name == "jga":
+        elif self.metric_name == "f1":
+            f1_total = f1_score(self.label_full, self.predict_full)
+            result = {"F1": round(f1_total * 100, 4)}
 
+        elif self.metric_name == "jga":
             JGA_total = []
             JGA_seen = []
             JGA_unseen = []
@@ -157,7 +164,7 @@ class Metric:
                 if len(T) > 0:
                     RSA = len(T-M-W)/len(T)
                     RSA_total.append(RSA)
-            result = {"Relative Slot Accuracy":round(sum(RSA_total)/len(RSA_total)*100, 4)}
+            result = {"RSA":round(sum(RSA_total)/len(RSA_total)*100, 4)}
 
         elif self.metric_name == "sa":
             SA_total = []
@@ -169,6 +176,6 @@ class Metric:
                     SA = len(T-M-W)/len(T)
                     SA_total.append(SA)
             result = {"Slot Accuracy":round(sum(SA_total)/len(SA_total)*100, 4)}
-        
+
         return result
 
