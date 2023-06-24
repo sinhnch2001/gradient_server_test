@@ -4,5 +4,5 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file src/config/config_fsdp.
   --batch_size 20 \
 	--num_beams   4 \
 	--with_tracking  \
-	--path_to_save_dir '/kaggle/input/epoch-13-res/epoch_13/pytorch_model.bin'\
+	--path_to_save_dir '/kaggle/input/epoch-29-res/epoch_29/pytorch_model.bin'\
 	--log_input_label_predict '/kaggle/working/log_input_label_predict.json'
