@@ -101,7 +101,7 @@ def main(args):
     else:
         result, label, predict = evaluator.eval(accelerator=accelerator,
                                 tokenizer=tokenizer, model=model, log_label_predict=True)
-    test = json.load(open(args.test_files))
+    test = json.load(open(args.test_files[0]))
     ild_list = []
     for i in range(len(label)):
         ild = {
