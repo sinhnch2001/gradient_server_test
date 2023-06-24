@@ -42,6 +42,8 @@ class Evaluation:
         self.with_tracking = with_tracking
         self.num_beams = num_beams
         self.max_target_length = max_target_length
+        self.label = []
+        self.predict = []
 
     @timeit
     def eval(self, accelerator, tokenizer, model, log_label_predict=False):
@@ -96,6 +98,8 @@ class Evaluation:
                 for metric_name in metrics_list.keys():
                     metrics_list[metric_name].add_batch(decoded_preds=decoded_preds, decoded_labels=decoded_labels)
 
+                self.label = self.label + decoded_labels
+                self.predict = self.predict + decoded_labels
                 del decoded_preds
                 del decoded_labels
 
@@ -118,10 +122,10 @@ class Evaluation:
         print(f"** Evaluation of process {accelerator.process_index} completed **")
         if self.with_tracking:
             if log_label_predict:
-                return results, total_loss_eval, label, predict
+                return results, total_loss_eval, self.label, self.predict
             return results, total_loss_eval
         if log_label_predict:
-            return results, label, predict
+            return results, self.label, self.predict
         return results
 
     def postprocess_text(self, preds, labels):
