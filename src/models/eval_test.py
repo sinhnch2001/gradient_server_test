@@ -102,14 +102,24 @@ def main(args):
         result, label, predict = evaluator.eval(accelerator=accelerator,
                                 tokenizer=tokenizer, model=model, log_label_predict=True)
     test = json.load(open(args.test_files[0]))
+
     ild_list = []
     for i in range(len(label)):
-        ild = {
-            "input": test[i]['instruction'] \
+        if args.module == "res":
+            item = test[i]['instruction'] \
+                    .replace('{context}', test[i]['context'].strip()) \
+                    .replace('{ontology}', test[i]['ontology']) \
+                    .replace('{system_action}', test[i]['system_action']) \
+                    .replace('{documents}', test[i]['documents']) \
+                    .replace('{style}', test[i]['style'])
+        else:
+            item = test[i]['instruction'] \
                     .replace('{list_user_action}', test[i]['list_user_action'].strip()) \
                     .replace('{context}', test[i]['context'].strip()) \
                     .replace('{current_query}', test[i]['current_query'].strip()) \
-                    .replace('{ontology}', test[i]['ontology'].strip()),
+                    .replace('{ontology}', test[i]['ontology'].strip())
+        ild = {
+            "input": item,
             "label": label[i],
             "predict": predict[i]
         }
