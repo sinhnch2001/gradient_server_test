@@ -109,7 +109,7 @@ class Evaluation:
 
         result_list = {}
         for metric_name in metrics_list.keys():
-            result, label, predict = metrics_list[metric_name].compute()
+            result = metrics_list[metric_name].compute()
 
             if result is not None:
                 results.update(result)
