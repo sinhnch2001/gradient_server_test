@@ -99,7 +99,7 @@ class Evaluation:
                     metrics_list[metric_name].add_batch(decoded_preds=decoded_preds, decoded_labels=decoded_labels)
 
                 self.label = self.label + decoded_labels
-                self.predict = self.predict + decoded_labels
+                self.predict = self.predict + decoded_preds
                 del decoded_preds
                 del decoded_labels
 
