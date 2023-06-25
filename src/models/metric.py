@@ -132,7 +132,7 @@ class Metric:
             result = result_bleurt
 
         elif self.metric_name == "f1":
-            f1_total = f1_score(self.label_full, self.predict_full)
+            f1_total = f1_score(self.label_full, self.predict_full, average="weighted")
             result = {"F1": round(f1_total * 100, 4)}
 
         elif self.metric_name == "jga":
