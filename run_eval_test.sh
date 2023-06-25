@@ -2,7 +2,7 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file src/config/config_fsdp.
 	--module 'res' \
 	--test_files '/kaggle/input/interim-data/interim/GradRes/KETOD/test.json' \
   --batch_size 20 \
-	--num_beams   4 \
+	--num_beams 4 \
 	--with_tracking  \
-	--path_to_save_dir '/kaggle/input/epoch-29-res/epoch_29/pytorch_model.bin'\
+	--path_to_save_dir '/kaggle/input/epoch-32-res/epoch_32/pytorch_model.bin'\
 	--log_input_label_predict '/kaggle/working/ketod.json'
