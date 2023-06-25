@@ -4,5 +4,5 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file src/config/config_fsdp.
   --batch_size 20 \
 	--num_beams 4 \
 	--with_tracking  \
-	--path_to_save_dir '/kaggle/input/epoch-44-dst/epoch_44/pytorch_model.bin'\
+	--path_to_save_dir '/kaggle/input/epoch-44-res/epoch_44/pytorch_model.bin'\
 	--log_input_label_predict '/kaggle/working/fusedchat_odd.json'
