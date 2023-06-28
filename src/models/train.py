@@ -58,6 +58,8 @@ def parse_args(args):
                         help="Initial learning rate (after the potential warmup period) to use.")
     parser.add_argument('--weight_decay', type=float, default=0.3,
                         help="Weight decay to use.")
+    parser.add_argument('--num_warmup_steps', type=int, default=0,
+                        help='Warmup learning rate training step')
     parser.add_argument('--gradient_accumulation_steps', type=int, default=1,
                         help="Number of updates steps to accumulate before performing a backward/update pass.")
     parser.add_argument('--lr_scheduler_type', type=str, default='linear', help="The scheduler type to use.",
@@ -111,7 +113,8 @@ def main(args):
         "per_device_batch_size":dataloaders.batch_size,
         "gradient_accumulation_steps": args.gradient_accumulation_steps,
         "do_eval_per_epoch": args.do_eval_per_epoch,
-        "learning_rate": args.learning_rate
+        "learning_rate": args.learning_rate,
+        "num_warmup_steps":args.num_warmup_steps,
     }
     trainer = Trainer(**trainer_args)
     trainer.train()
