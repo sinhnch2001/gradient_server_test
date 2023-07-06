@@ -106,13 +106,18 @@ class ResDataLoader:
     
                 item = sample['instruction'] \
                     .replace('{context}', sample['context'].strip()) \
-                    .replace('{ontology}', sample['ontology']) \
-                    .replace('{system_action}', sample['system_action']) \
-                    .replace('{documents}', sample['documents']) \
-                    .replace('{style}', sample['style'])
+                    .replace('{ontology}', sample['ontology'].strip()) \
+                    .replace('{system_action}', sample['system_action'].strip()) \
+                    .replace('{documents}', sample['documents'].strip()) \
+                    .replace('\s+', ' ') \
+                    .replace(' |  | .', '.') \
+                    .replace(' | .', '.') \
+                    .replace(' || ', ' | ') \
+                    .replace(' |  | ','')
 
                 inputs.append(re.sub('\s+', ' ', item))
                 targets.append(re.sub('\s+', ' ', sample['response'].strip()))
+
             return inputs, targets
 
         inputs, targets = mapping_sample(batch_samples)
