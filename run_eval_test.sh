@@ -1,8 +1,8 @@
 CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file src/config/config_fsdp.yaml src/models/eval_test.py 	\
-	--module 'res' \
-	--test_files '/kaggle/working/interim/GradRes/WOW/test.json' \
+	--module 'dst_odd' \
+	--test_files '/kaggle/input/interim-data/interim_blv1/GradSearch/FUSEDCHAT/test_odd.json' \
   --batch_size 20 \
 	--num_beams 4 \
 	--with_tracking  \
-	--path_to_save_dir '/kaggle/input/epoch44-res-30-6/pytorch_model_epoch44_res_30-06.bin'\
-	--log_input_label_predict '/kaggle/working/wow_res.json'
+	--path_to_save_dir '/kaggle/input/epoch44-dst-6-7/module1_pytorch_model.bin'\
+	--log_input_label_predict '/kaggle/working/fusedchat_dst_odd.json'
