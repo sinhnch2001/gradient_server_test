@@ -108,10 +108,14 @@ def main(args):
         if args.module == "res":
             item = test[i]['instruction'] \
                     .replace('{context}', test[i]['context'].strip()) \
-                    .replace('{ontology}', test[i]['ontology']) \
-                    .replace('{system_action}', test[i]['system_action']) \
-                    .replace('{documents}', test[i]['documents']) \
-                    .replace('{style}', test[i]['style'])
+                    .replace('{ontology}', test[i]['ontology'].strip()) \
+                    .replace('{system_action}', test[i]['system_action'].strip()) \
+                    .replace('{documents}', test[i]['documents'].strip()) \
+                    .replace('\s+', ' ') \
+                    .replace(' |  | .', '.') \
+                    .replace(' | .', '.') \
+                    .replace(' || ', ' | ') \
+                    .replace(' |  | ', '')
         else:
             item = test[i]['instruction'] \
                     .replace('{list_user_action}', test[i]['list_user_action'].strip()) \
