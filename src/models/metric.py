@@ -12,8 +12,6 @@ import json
 from datasets import DownloadConfig
 from sklearn.metrics import f1_score
 
-num_slot_domain = json.load(open("./data/processed_schema/num_slot_domain.json"))
-
 def formatstring(input_string, metric_name):
 
     if ":[" not in input_string:
@@ -43,13 +41,16 @@ def formatstring(input_string, metric_name):
             input_string = i
 
             # Extract the slot name and value
+            print("\ninput_string ",input_string)
             slot_name = input_string.split('=')[0].replace('(', '-').replace(')', '')
             slot_name = slot_name.replace('[', '').replace(']', '')
+            print("slot_name ",slot_name)
             if "=" in input_string:
-                slot_value = input_string.split('=')[1]
+                slot_value = input_string.split('=')[1].replace(')', '')
 
             else:
                 slot_value = ""
+            print("slot_value ",slot_value)
             # Convert to the desired format
             if slot_value != "":
                 converted_string = f"{slot_name}-{slot_value}"
@@ -58,9 +59,9 @@ def formatstring(input_string, metric_name):
             converted_string = converted_string.replace(')', '')
 
             e = b[count][0] + '-' + converted_string
-            output.append(e.replace('- ', '-').replace('_intent', '-intent').replace('_alts', '-intent').strip())
+            output.append(e.replace('- ', '-').replace('_intent', '-intent').replace(']', '').strip())
         count = count + 1
-
+    print("output ", output)
     output_only_slot = []
     for element in output:
         if "slot" in element:
@@ -75,16 +76,15 @@ class Metric:
         self.label_full = []
         self.predict_slot = []
         self.label_slot = []
-        self.num_slot_domain = num_slot_domain
+        self.num_slot_domain_fusedchat = 65
         self.seen_ketod = ['SERVICES_1', 'CALENDAR_1', 'RIDESHARING_2', 'MUSIC_2', 'SERVICES_2', 'HOTELS_3', 'HOTELS_1', 'HOMES_1', 'BUSES_2', 'RIDESHARING_1', 'TRAVEL_1', 'MEDIA_1', 'WEATHER_1', 'EVENTS_1', 'MUSIC_1', 'MOVIES_1', 'FLIGHTS_1', 'RESTAURANTS_1', 'RENTALCARS_2', 'BUSES_1', 'SERVICES_3', 'RENTALCARS_1', 'EVENTS_2', 'FLIGHTS_2', 'HOTELS_2']
         self.unseen_ketod = ['SERVICES_4', 'HOMES_2', 'MUSIC_3', 'TRAINS_1', 'MEDIA_3', 'PAYMENT_1', 'MESSAGING_1', 'RESTAURANTS_2', 'BUSES_3', 'MOVIES_3', 'EVENTS_3', 'FLIGHTS_4', 'RENTALCARS_3', 'HOTELS_4']
 
-        if self.metric_name == "rouge" or self.metric_name == "bleu" or self.metric_name == "bleurt" or self.metric_name == "bertscore":
+        if self.metric_name == "rouge" or self.metric_name == "bleu" or self.metric_name == "bertscore":
             self.metric = evaluate.load(self.metric_name)
         elif self.metric_name == "bleurt":
             self.metric = evaluate.load(self.metric_name, "bleurt-base-128", download_config=DownloadConfig(use_etag=False))
 
-   
     def add_batch(self, decoded_preds, decoded_labels):
         if self.metric_name == "rouge" or self.metric_name == "bleu" or self.metric_name == "bleurt" or self.metric_name == "bertscore" or self.metric_name == "bleurt":
             self.metric.add_batch(
@@ -169,14 +169,36 @@ class Metric:
         elif self.metric_name == "sa":
             SA_total = []
             for index in range(0, len(self.label_slot)):
-                T = self.num_slot_domain
+                T = self.num_slot_domain_fusedchat
                 M = set(self.label_slot[index]) - set(self.predict_slot[index])
                 W = set(self.predict_slot[index]) - set(self.label_slot[index])
                 if len(T) > 0:
-                    SA = len(T-M-W)/len(T)
+                    SA = T-len(M+W)/T
                     SA_total.append(SA)
             result = {"Slot Accuracy":round(sum(SA_total)/len(SA_total)*100, 4)}
 
         return result
+
+
+# ketod_dst_tod = json.load(open("C:\ALL\OJT\server\gradient_server_test\data\\new dst\ketod_dst_tod.json"))
+# decoded_labels = []
+# decoded_preds = []
+# for sample in ketod_dst_tod:
+#     decoded_labels.append(sample["label"])
+#     decoded_preds.append(sample["predict"])
+# metric = Metric("sa")
+# metric.add_batch(decoded_preds=decoded_preds, decoded_labels=decoded_labels)
+# print(  metric.predict_full[61], "\n",
+#         metric.label_full[61], "\n",
+#         metric.predict_slot[61], "\n",
+#         metric.label_slot[61])
+# print(  metric.predict_full[313], "\n",
+#         metric.label_full[313], "\n",
+#         metric.predict_slot[313], "\n",
+#         metric.label_slot[313])
+# print(  metric.predict_full[63], "\n",
+#         metric.label_full[63], "\n",
+#         metric.predict_slot[63], "\n",
+#         metric.label_slot[63])
 
 
