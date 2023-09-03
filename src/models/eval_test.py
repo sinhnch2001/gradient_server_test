@@ -80,7 +80,7 @@ def main(args):
         metrics_name = ['rouge', "bleu"]
     elif args.module == "dst_tod":
         dataloaders = StateDataLoader(**dataloader_args).__call__()
-        metrics_name = ['rouge', "bleu", "rsa", "jga"]
+        metrics_name = ['rouge', "bleu", "rsa", "jga", "sa"]
     elif args.module == "dst_odd":
         dataloaders = StateDataLoader(**dataloader_args).__call__()
         metrics_name = ["f1"]
