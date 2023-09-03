@@ -16,3 +16,4 @@ evaluate>=0.3.0
 deepspeed>=0.8.0
 evaluate
 scikit-learn
+transformers
