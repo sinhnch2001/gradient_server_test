@@ -12,7 +12,7 @@ import json
 from datasets import DownloadConfig
 from sklearn.metrics import f1_score
 
-def formatstring(input_string, metric_name):
+def formatstring(input_string):
 
     if ":[" not in input_string:
         return [],[]
@@ -34,23 +34,17 @@ def formatstring(input_string, metric_name):
     count = 0
     output = list()
     for z in d:
-
         for i in z:
             import re
-
             input_string = i
-
             # Extract the slot name and value
-            print("\ninput_string ",input_string)
             slot_name = input_string.split('=')[0].replace('(', '-').replace(')', '')
             slot_name = slot_name.replace('[', '').replace(']', '')
-            print("slot_name ",slot_name)
             if "=" in input_string:
                 slot_value = input_string.split('=')[1].replace(')', '')
 
             else:
                 slot_value = ""
-            print("slot_value ",slot_value)
             # Convert to the desired format
             if slot_value != "":
                 converted_string = f"{slot_name}-{slot_value}"
@@ -61,7 +55,6 @@ def formatstring(input_string, metric_name):
             e = b[count][0] + '-' + converted_string
             output.append(e.replace('- ', '-').replace('_intent', '-intent').replace(']', '').strip())
         count = count + 1
-    print("output ", output)
     output_only_slot = []
     for element in output:
         if "slot" in element:
@@ -96,8 +89,8 @@ class Metric:
                 self.label_full.append(decoded_labels[i])
         else:
             for i in range(len(decoded_preds)):
-                p_full, p_slot = formatstring(decoded_preds[i], self.metric_name)
-                l_full, l_slot = formatstring(decoded_labels[i], self.metric_name)
+                p_full, p_slot = formatstring(decoded_preds[i])
+                l_full, l_slot = formatstring(decoded_labels[i])
                 self.predict_full.append(p_full)
                 self.label_full.append(l_full)
                 self.predict_slot.append(p_slot)
@@ -172,10 +165,30 @@ class Metric:
                 T = self.num_slot_domain_fusedchat
                 M = set(self.label_slot[index]) - set(self.predict_slot[index])
                 W = set(self.predict_slot[index]) - set(self.label_slot[index])
-                if len(T) > 0:
-                    SA = T-len(M+W)/T
+                if T > 0:
+                    SA = (T-len(M)-len(W))/T
                     SA_total.append(SA)
             result = {"Slot Accuracy":round(sum(SA_total)/len(SA_total)*100, 4)}
+
+        elif self.metric_name == "aga":
+            AGA_total = []
+            AGA_seen = []
+            AGA_unseen = []
+            for index in range(0, len(self.label_full)):
+                AGA = len(set(self.label_full[index]).intersection(set(self.predict_full[index]))) / len(set(self.label_full[index]))
+                AGA_total.append(AGA)
+                for slot in self.label_full[index]:
+                    if slot.split("-")[0] in self.unseen_ketod:
+                        AGA_unseen.append(AGA)
+                        break
+                    if slot == self.label_full[index][-1]:
+                        AGA_seen.append(AGA)
+            if len(AGA_seen) > 0 and len(AGA_unseen) > 0:
+                result = {"AGA_total": round(sum(AGA_total) / len(AGA_total) * 100, 4),
+                          "AGA_seen": round(sum(AGA_seen) / len(AGA_seen) * 100, 4),
+                          "AGA_unseen": round(sum(AGA_unseen) / len(AGA_unseen) * 100, 4)}
+            else:
+                result = {"AGA_total": round(sum(AGA_total) / len(AGA_total) * 100, 4)}
 
         return result
 
