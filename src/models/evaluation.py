@@ -96,6 +96,7 @@ class Evaluation:
                 decoded_preds = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
                 decoded_labels = tokenizer.batch_decode(labels, skip_special_tokens=True)
                 decoded_preds, decoded_labels = self.postprocess_text(decoded_preds, decoded_labels)
+                print("jhahahhahahaahhahahah")
                 for metric_name in metrics_list.keys():
                     metrics_list[metric_name].add_batch(decoded_preds=decoded_preds, decoded_labels=decoded_labels)
 
@@ -103,7 +104,7 @@ class Evaluation:
                 self.predict = self.predict + decoded_preds
                 del decoded_preds
                 del decoded_labels
-                print("jhahahhahahaahhahahah")
+
                 if self.with_tracking:
                     # Compute and log the loss
                     unwrap_model = accelerator.unwrap_model(model)
