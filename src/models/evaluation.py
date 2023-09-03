@@ -87,7 +87,7 @@ class Evaluation:
                 generated_tokens, labels = accelerator.gather_for_metrics((generated_tokens, labels))
                 generated_tokens = generated_tokens.cpu().numpy()
                 labels = labels.cpu().numpy()
-                print("jhahahhahahaahhahahah")
+
                 if self.ignore_pad_token_for_loss:
                     # Replace -100 in the labels as we can't decode them.
                     labels = np.where(labels != -100, labels, tokenizer.pad_token_id)
@@ -103,7 +103,7 @@ class Evaluation:
                 self.predict = self.predict + decoded_preds
                 del decoded_preds
                 del decoded_labels
-
+                print("jhahahhahahaahhahahah")
                 if self.with_tracking:
                     # Compute and log the loss
                     unwrap_model = accelerator.unwrap_model(model)
