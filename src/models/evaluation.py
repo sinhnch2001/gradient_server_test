@@ -64,6 +64,7 @@ class Evaluation:
         for step, batch in enumerate(tqdm(self.eval_dataloaders,
                                           desc="Eval on process: " + str(accelerator.process_index),
                                           colour="blue", position=accelerator.process_index)):
+            print("jhahahhahahaahhahahah")
             # Pass dummy batch to avoid caffe error
             if step == 0 and accelerator.distributed_type == DistributedType.FSDP:
                 model(**batch)
