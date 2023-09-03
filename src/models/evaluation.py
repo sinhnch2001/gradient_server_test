@@ -64,7 +64,7 @@ class Evaluation:
         for step, batch in enumerate(tqdm(self.eval_dataloaders,
                                           desc="Eval on process: " + str(accelerator.process_index),
                                           colour="blue", position=accelerator.process_index)):
-            print("jhahahhahahaahhahahah")
+
             # Pass dummy batch to avoid caffe error
             if step == 0 and accelerator.distributed_type == DistributedType.FSDP:
                 model(**batch)
@@ -87,7 +87,7 @@ class Evaluation:
                 generated_tokens, labels = accelerator.gather_for_metrics((generated_tokens, labels))
                 generated_tokens = generated_tokens.cpu().numpy()
                 labels = labels.cpu().numpy()
-
+                print("jhahahhahahaahhahahah")
                 if self.ignore_pad_token_for_loss:
                     # Replace -100 in the labels as we can't decode them.
                     labels = np.where(labels != -100, labels, tokenizer.pad_token_id)
