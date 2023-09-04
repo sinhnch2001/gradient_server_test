@@ -14,7 +14,7 @@ from sklearn.metrics import f1_score
 
 def formatstring(input_string):
 
-    if ":[" not in input_string:
+    if "(" not in input_string:
         return [],[]
 
     # Split the string at '||' and create a list of components
