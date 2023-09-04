@@ -125,21 +125,21 @@ class Metric:
             result = result_bleurt
 
         elif self.metric_name == "f1":
-            f1_total = f1_score(self.label_full, self.predict_full, average="weighted")
+            f1_total = f1_score(self.label_slot, self.predict_slot, average="weighted")
             result = {"F1": round(f1_total * 100, 4)}
 
         elif self.metric_name == "jga":
             JGA_total = []
             JGA_seen = []
             JGA_unseen = []
-            for index in range(0, len(self.label_full)):
-                JGA = 1 if set(self.label_full[index]) == set(self.predict_full[index]) else 0
+            for index in range(0, len(self.label_slot)):
+                JGA = 1 if set(self.label_slot[index]) == set(self.predict_slot[index]) else 0
                 JGA_total.append(JGA)
-                for slot in self.label_full[index]:
+                for slot in self.label_slot[index]:
                     if slot.split("-")[0] in self.unseen_ketod:
                         JGA_unseen.append(JGA)
                         break
-                    if slot == self.label_full[index][-1]:
+                    if slot == self.label_slot[index][-1]:
                         JGA_seen.append(JGA)
             if len(JGA_seen) > 0 and len(JGA_unseen) > 0:
                 result = {"JGA_avg":round(sum(JGA_total)/len(JGA_total)*100, 4),
@@ -174,14 +174,14 @@ class Metric:
             AGA_total = []
             AGA_seen = []
             AGA_unseen = []
-            for index in range(0, len(self.label_full)):
-                AGA = len(set(self.label_full[index]).intersection(set(self.predict_full[index]))) / len(set(self.label_full[index]))
+            for index in range(0, len(self.label_slot)):
+                AGA = len(set(self.label_slot[index]).intersection(set(self.predict_slot[index]))) / len(set(self.label_slot[index]))
                 AGA_total.append(AGA)
-                for slot in self.label_full[index]:
+                for slot in self.label_slot[index]:
                     if slot.split("-")[0] in self.unseen_ketod:
                         AGA_unseen.append(AGA)
                         break
-                    if slot == self.label_full[index][-1]:
+                    if slot == self.label_slot[index][-1]:
                         AGA_seen.append(AGA)
             if len(AGA_seen) > 0 and len(AGA_unseen) > 0:
                 result = {"AGA_total": round(sum(AGA_total) / len(AGA_total) * 100, 4),
