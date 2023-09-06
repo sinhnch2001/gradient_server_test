@@ -1,4 +1,4 @@
-CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file src/config/config_fsdp.yaml src/models/test_evaluation.py 	\
+CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file gradient_server_test/src/config/config_fsdp.yaml src/models/test_evaluation.py 	\
 	--module 'dst_tod' \
 	--test_files '/kaggle/input/mw-extra/MW21/MW21/test.json' \
   --batch_size 18 \
