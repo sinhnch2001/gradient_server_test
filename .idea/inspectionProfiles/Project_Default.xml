@@ -4,7 +4,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="239">
+          <list size="240">
             <item index="0" class="java.lang.String" itemvalue="faiss" />
             <item index="1" class="java.lang.String" itemvalue="torch" />
             <item index="2" class="java.lang.String" itemvalue="bs4" />
@@ -244,6 +244,7 @@
             <item index="236" class="java.lang.String" itemvalue="aiosignal" />
             <item index="237" class="java.lang.String" itemvalue="google-auth" />
             <item index="238" class="java.lang.String" itemvalue="deepspeed" />
+            <item index="239" class="java.lang.String" itemvalue="evaluation" />
           </list>
         </value>
       </option>
