@@ -101,7 +101,6 @@ class StateDataLoader:
         def mapping_sample(samples):
             inputs, targets = [], []
             for sample in samples:
-                print(sample)
                 item = sample['instruction'] \
                     .replace('{list_user_action}', sample['list_user_action'].strip()) \
                     .replace('{context}', sample['context'].strip()) \
