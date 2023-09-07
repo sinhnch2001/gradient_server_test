@@ -91,10 +91,11 @@ class Metric:
             for i in range(len(decoded_preds)):
                 p_full, p_slot = formatstring(decoded_preds[i])
                 l_full, l_slot = formatstring(decoded_labels[i])
-                self.predict_full.append(p_full)
-                self.label_full.append(l_full)
-                self.predict_slot.append(p_slot)
-                self.label_slot.append(l_slot)
+                if len(l_slot) > 0 and len(l_full) > 0:
+                    self.predict_full.append(p_full)
+                    self.label_full.append(l_full)
+                    self.predict_slot.append(p_slot)
+                    self.label_slot.append(l_slot)
 
     def compute(self):
         if self.metric_name == "rouge":
