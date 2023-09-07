@@ -44,6 +44,7 @@ class Evaluation:
         self.max_target_length = max_target_length
         self.label = []
         self.predict = []
+        self.jga = []
 
     @timeit
     def eval(self, accelerator, tokenizer, model, log_label_predict=False):
@@ -119,14 +120,15 @@ class Evaluation:
             if result is not None:
                 results.update(result)
             # result_list[metric_name] = result
-
+        self.jga = results["JGA_list"]
+        del results["JGA_list"]
         print(f"** Evaluation of process {accelerator.process_index} completed **")
         if self.with_tracking:
             if log_label_predict:
-                return results, total_loss_eval, self.label, self.predict
+                return results, total_loss_eval, self.label, self.predict, self.jga
             return results, total_loss_eval
         if log_label_predict:
-            return results, self.label, self.predict
+            return results, self.label, self.predict, self.jga
         return results
 
     def postprocess_text(self, preds, labels):

@@ -53,12 +53,12 @@ def formatstring(input_string):
             converted_string = converted_string.replace(')', '')
 
             e = b[count][0] + '-' + converted_string
-            output.append(e.replace('- ', '-').replace('_intent', '-intent').replace(']', '').strip())
+            output.append(e.replace('- ', '-').replace('_intent', '-intent').replace(']', '').strip().lower())
         count = count + 1
     output_only_slot = []
     for element in output:
         if "slot" in element:
-            output_only_slot.append(element.replace("-inform","").replace("-request",""))
+            output_only_slot.append(element.replace("-inform","").replace("-request","").lower())
 
     return output, output_only_slot
 
@@ -144,9 +144,11 @@ class Metric:
             if len(JGA_seen) > 0 and len(JGA_unseen) > 0:
                 result = {"JGA_avg":round(sum(JGA_total)/len(JGA_total)*100, 4),
                           "JGA_seen":round(sum(JGA_seen)/len(JGA_seen)*100, 4),
-                          "JGA_unseen":round(sum(JGA_unseen)/len(JGA_unseen)*100, 4)}
+                          "JGA_unseen":round(sum(JGA_unseen)/len(JGA_unseen)*100, 4),
+                          "JGA_list": JGA_total}
             else:
-                result = {"JGA_avg":round(sum(JGA_total)/len(JGA_total)*100, 4)}
+                result = {"JGA_avg":round(sum(JGA_total)/len(JGA_total)*100, 4),
+                          "JGA_list": JGA_total}
         
         elif self.metric_name == "rsa":
             RSA_total = []

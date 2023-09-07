@@ -47,7 +47,7 @@ class DialConverter(AbstractCoverter):
         self.window_context = window_context if window_context > -1 else -1
 
     @abc.abstractmethod
-    def define_instruct(
+    def load_instruction(
             self,
             instruct_path: Optional[str] = None,
     ) -> List[str]:
@@ -62,7 +62,7 @@ class DialConverter(AbstractCoverter):
         pass
 
     @abc.abstractmethod
-    def define_ontology(
+    def load_ontology(
             self,
             ontolopy_path: Optional[str] = None
     ) -> Union[Dict, List[Dict]]:

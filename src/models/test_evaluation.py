@@ -94,14 +94,14 @@ def main(args):
 
 
     if args.with_tracking:
-        result, total_loss_eval, label, predict = evaluator.eval(accelerator=accelerator,
+        result, total_loss_eval, label, predict, jga = evaluator.eval(accelerator=accelerator,
                                                  tokenizer=tokenizer, model=model, log_label_predict=True)
     else:
-        result, label, predict = evaluator.eval(accelerator=accelerator,
+        result, label, predict, jga = evaluator.eval(accelerator=accelerator,
                                 tokenizer=tokenizer, model=model, log_label_predict=True)
     test = json.load(open(args.test_files[0]))
 
-    ild_list = []
+    ildm_list = []
     for i in range(len(label)):
         if args.module == "res":
             item = test[i]['instruction'] \
@@ -120,14 +120,15 @@ def main(args):
                     .replace('{context}', test[i]['context'].strip()) \
                     .replace('{current_query}', test[i]['current_query'].strip()) \
                     .replace('{ontology}', test[i]['ontology'].strip())
-        ild = {
+        ildm = {
             "input": item,
             "label": label[i],
-            "predict": predict[i]
+            "predict": predict[i],
+            "JGA" : jga[i]
         }
-        ild_list.append(ild)
+        ildm_list.append(ildm)
     with open(args.log_input_label_predict, 'w') as f:
-        json.dump(ild_list, f, indent=4)
+        json.dump(ildm_list, f, indent=4)
 
     for k,v in result.items():
         print(k,":",v)
