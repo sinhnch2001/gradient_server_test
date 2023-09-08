@@ -130,7 +130,7 @@ class Metric:
                 JGA = 1 if set(self.label_slot[index]) == set(self.predict_slot[index]) else 0
                 JGA_total.append(JGA)
                 for slot in self.label_slot[index]:
-                    if slot.split("-")[0] in self.unseen_ketod:
+                    if slot.split("-")[0].upper() in self.unseen_ketod:
                         JGA_unseen.append(JGA)
                         break
                     if slot == self.label_slot[index][-1]:
