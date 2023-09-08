@@ -78,7 +78,7 @@ def main(args):
         metrics_name = ['rouge', "bleu"]
     elif args.module == "dst_tod":
         dataloaders = StateDataLoader(**dataloader_args).__call__()
-        metrics_name = ["rsa", "jga", "sa", "aga"]
+        metrics_name = ["rsa", "jga", "sa"]
     elif args.module == "dst_odd":
         dataloaders = StateDataLoader(**dataloader_args).__call__()
         metrics_name = ["f1"]
@@ -124,8 +124,7 @@ def main(args):
             "input": item,
             "label": label[i],
             "predict": predict[i],
-            "JGA" : jga[i],
-            "AGA" : aga[i]
+            "JGA" : jga[i]
         }
         ildm_list.append(ildm)
     with open(args.log_input_label_predict, 'w') as f:
