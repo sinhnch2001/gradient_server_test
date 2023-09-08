@@ -51,13 +51,13 @@ def formatstring(input_string):
             output.append(dsv)
     return output
 
-# test = json.load(open(r"C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\MW21\test.json"))
+# test = json.load(open(r"C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\KETOD\test.json"))
 # all_output = {}
 # for dial in test:
 #     label = dial["label"]
 #     output = formatstring(label)
 #     all_output.setdefault(label, output)
-# with open(r"C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\MW21\test_output.json", 'w') as f:
+# with open(r"C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\KETOD\test_output.json", 'w') as f:
 #     json.dump(all_output, f, indent=4)
 
 class Metric:
