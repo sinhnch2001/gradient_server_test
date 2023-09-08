@@ -13,60 +13,56 @@ from datasets import DownloadConfig
 from sklearn.metrics import f1_score
 
 def formatstring(input_string):
+    if "inform" not in input_string:
+        return []
 
-    if "(" not in input_string:
-        return [],[]
+    # Split the string at '||' and create a list of slots_of_domains
+    # "HOTEL:[inform(slot0=24:30) and inform(slot1=hotel)] || TRAIN:[inform(slot5=leicester) and inform(slot2=wednesday)]"
 
-    # Split the string at '||' and create a list of components
-    components = input_string.split('||')
-    T = 0
-    b = []
-    for i in components:
-        a = i.split(':')
+    slots_of_domains = input_string.lower().split('||')
+    # ["HOTEL:[inform(slot0=24:30) and inform(slot1=hotel)]", "TRAIN:[inform(slot5=leicester) and inform(slot2=wednesday)]"]
 
-        b.append(a)
+    dict_domain_slots = dict()
+    for slots_of_domain in slots_of_domains:
+        domain_slots = slots_of_domain.strip().split(':[')
+        # ["HOTEL", "inform(slot0=24:30) and inform(slot1=hotel)]"]
 
-    d = []
-    for y in b:
-        e = y[1].split('and')
-        if e not in d:
-            d.append(e)
-    count = 0
-    output = list()
-    for z in d:
-        for i in z:
-            import re
-            input_string = i
-            # Extract the slot name and value
-            slot_name = input_string.split('=')[0].replace('(', '-').replace(')', '')
-            slot_name = slot_name.replace('[', '').replace(']', '')
-            if "=" in input_string:
-                slot_value = input_string.split('=')[1].replace(')', '')
+        domain = domain_slots[0].strip() # "HOTEL"
+        slots = domain_slots[1].strip()
+        # "inform(slot0=24:30) and inform(slot1=hotel)]"
+        slots = slots[0:-2].split(')')
+        # ["inform(slot0=24:30", " and inform(slot1=hotel"]
+        dict_state = {}
+        for action_slot_value in slots:
+            # " and inform(slot0=24:30)"
+            if "inform(slot" in action_slot_value:
+                if action_slot_value.strip()[:3] == "and":
+                    action_slot_value = action_slot_value.strip()[4:]
+                slot = action_slot_value.strip()[7:12]
+                value = action_slot_value.strip()[13:]
+                dict_state.setdefault(slot, value)
+                # {"slot0":"24:30", "slot1":"hotel"}
+        dict_domain_slots.setdefault(domain, dict_state)
+        # {"HOTEL":{"slot0":"24:30", "slot1":"hotel"}, "TRAIN":{"slot5":"leicester", "slot2":"wednesday"}]
+    output = []
+    for domain, slots_values in dict_domain_slots.items():
+        for slot, value in slots_values.items():
+            dsv = domain+"-"+slot+"-"+value
+            output.append(dsv)
+    return output
 
-            else:
-                slot_value = ""
-            # Convert to the desired format
-            if slot_value != "":
-                converted_string = f"{slot_name}-{slot_value}"
-            else:
-                converted_string = slot_name
-            converted_string = converted_string.replace(')', '')
-
-            e = b[count][0] + '-' + converted_string
-            output.append(e.replace('- ', '-').replace('_intent', '-intent').replace(']', '').strip().lower())
-        count = count + 1
-    output_only_slot = []
-    for element in output:
-        if "slot" in element:
-            output_only_slot.append(element.replace("-inform","").replace("-request","").lower())
-
-    return output, output_only_slot
+# test = json.load(open(r"C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\MW21\test.json"))
+# all_output = {}
+# for dial in test:
+#     label = dial["label"]
+#     output = formatstring(label)
+#     all_output.setdefault(label, output)
+# with open(r"C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\MW21\test_output.json", 'w') as f:
+#     json.dump(all_output, f, indent=4)
 
 class Metric:
     def __init__(self, metric_name):
         self.metric_name = metric_name
-        self.predict_full = []
-        self.label_full = []
         self.predict_slot = []
         self.label_slot = []
         self.num_slot_domain_fusedchat = 65
@@ -85,17 +81,14 @@ class Metric:
                 references=decoded_labels)
         elif self.metric_name == "f1":
             for i in range(len(decoded_preds)):
-                self.predict_full.append(decoded_preds[i])
-                self.label_full.append(decoded_labels[i])
+                self.predict_slot.append(decoded_preds[i])
+                self.label_slot.append(decoded_labels[i])
         else:
             for i in range(len(decoded_preds)):
-                p_full, p_slot = formatstring(decoded_preds[i])
-                l_full, l_slot = formatstring(decoded_labels[i])
-                if len(l_slot) > 0 and len(l_full) > 0:
-                    self.predict_full.append(p_full)
-                    self.label_full.append(l_full)
-                    self.predict_slot.append(p_slot)
-                    self.label_slot.append(l_slot)
+                p_slot = formatstring(decoded_preds[i])
+                l_slot = formatstring(decoded_labels[i])
+                self.predict_slot.append(p_slot)
+                self.label_slot.append(l_slot)
 
     def compute(self):
         if self.metric_name == "rouge":
@@ -189,9 +182,11 @@ class Metric:
             if len(AGA_seen) > 0 and len(AGA_unseen) > 0:
                 result = {"AGA_total": round(sum(AGA_total) / len(AGA_total) * 100, 4),
                           "AGA_seen": round(sum(AGA_seen) / len(AGA_seen) * 100, 4),
-                          "AGA_unseen": round(sum(AGA_unseen) / len(AGA_unseen) * 100, 4)}
+                          "AGA_unseen": round(sum(AGA_unseen) / len(AGA_unseen) * 100, 4),
+                          "AGA_list": AGA_total}
             else:
-                result = {"AGA_total": round(sum(AGA_total) / len(AGA_total) * 100, 4)}
+                result = {"AGA_total": round(sum(AGA_total) / len(AGA_total) * 100, 4),
+                          "AGA_list": AGA_total}
 
         return result
 

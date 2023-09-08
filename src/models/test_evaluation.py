@@ -78,7 +78,7 @@ def main(args):
         metrics_name = ['rouge', "bleu"]
     elif args.module == "dst_tod":
         dataloaders = StateDataLoader(**dataloader_args).__call__()
-        metrics_name = ['rouge', "bleu", "rsa", "jga", "sa"]
+        metrics_name = ["rsa", "jga", "sa", "aga"]
     elif args.module == "dst_odd":
         dataloaders = StateDataLoader(**dataloader_args).__call__()
         metrics_name = ["f1"]
@@ -94,10 +94,10 @@ def main(args):
 
 
     if args.with_tracking:
-        result, total_loss_eval, label, predict, jga = evaluator.eval(accelerator=accelerator,
+        result, total_loss_eval, label, predict, jga, aga = evaluator.eval(accelerator=accelerator,
                                                  tokenizer=tokenizer, model=model, log_label_predict=True)
     else:
-        result, label, predict, jga = evaluator.eval(accelerator=accelerator,
+        result, label, predict, jga, aga = evaluator.eval(accelerator=accelerator,
                                 tokenizer=tokenizer, model=model, log_label_predict=True)
     test = json.load(open(args.test_files[0]))
 
@@ -124,7 +124,8 @@ def main(args):
             "input": item,
             "label": label[i],
             "predict": predict[i],
-            "JGA" : jga[i]
+            "JGA" : jga[i],
+            "AGA" : aga[i]
         }
         ildm_list.append(ildm)
     with open(args.log_input_label_predict, 'w') as f:
