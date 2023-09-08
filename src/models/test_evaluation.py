@@ -94,10 +94,10 @@ def main(args):
 
 
     if args.with_tracking:
-        result, total_loss_eval, label, predict, jga, aga = evaluator.eval(accelerator=accelerator,
+        result, total_loss_eval, label, predict, jga = evaluator.eval(accelerator=accelerator,
                                                  tokenizer=tokenizer, model=model, log_label_predict=True)
     else:
-        result, label, predict, jga, aga = evaluator.eval(accelerator=accelerator,
+        result, label, predict, jga = evaluator.eval(accelerator=accelerator,
                                 tokenizer=tokenizer, model=model, log_label_predict=True)
     test = json.load(open(args.test_files[0]))
 
