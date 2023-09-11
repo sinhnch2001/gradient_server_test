@@ -103,8 +103,8 @@ class StateDataLoader:
             for sample in samples:
                 item = sample['instruction'] \
                     .replace('{list_user_action}', sample['list_user_action'].strip()) \
-                    .replace('{context}', sample['context'].strip()) \
-                    .replace('{current_query}', sample['current_query'].strip()) \
+                    .replace('{history}', sample['history'].strip()) \
+                    .replace('{current}', sample['current'].strip()) \
                     .replace('{ontology}', sample['ontology'].strip()) \
 
                 inputs.append(re.sub('\s+', ' ', item))
