@@ -120,8 +120,9 @@ class Evaluation:
             if result is not None:
                 results.update(result)
             # result_list[metric_name] = result
-        self.jga = results["JGA_list"]
-        del results["JGA_list"]
+        if "JGA_list" in results.keys():
+            self.jga = results["JGA_list"]
+            del results["JGA_list"]
         print(f"** Evaluation of process {accelerator.process_index} completed **")
         if self.with_tracking:
             if log_label_predict:
