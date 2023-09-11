@@ -1,0 +1,1410 @@
+{
+    "alarm_1": {
+        "time of the alarm": [
+            "alarm_time"
+        ],
+        "name of the alarm": [
+            "alarm_name"
+        ],
+        "time to set for the new alarm": [
+            "new_alarm_time"
+        ],
+        "name to use for the new alarm": [
+            "new_alarm_name"
+        ]
+    },
+    "banks_2": {
+        "the user's account type": [
+            "account_type"
+        ],
+        "the account type of the recipient to transfer the money to": [
+            "recipient_account_type"
+        ],
+        "the balance in the specified account": [
+            "account_balance"
+        ],
+        "the amount of money to transfer": [
+            "transfer_amount"
+        ],
+        "the name of the recipient to transfer the money to": [
+            "recipient_name"
+        ],
+        "number of days for the transfer to go through": [
+            "transfer_time"
+        ]
+    },
+    "buses_1": {
+        "city where bus is leaving from": [
+            "from_location"
+        ],
+        "city where bus is going to": [
+            "to_location"
+        ],
+        "station where bus is leaving from": [
+            "from_station"
+        ],
+        "station where bus is going to": [
+            "to_station"
+        ],
+        "date of bus leaving for journey": [
+            "leaving_date"
+        ],
+        "time of bus leaving for journey": [
+            "leaving_time"
+        ],
+        "fare per ticket for journey": [
+            "fare"
+        ],
+        "number of travelers for journey": [
+            "travelers"
+        ],
+        "number of transfers in journey": [
+            "transfers"
+        ]
+    },
+    "events_1": {
+        "type of event": [
+            "category"
+        ],
+        "subcategory of event, either a music genre or sport name": [
+            "subcategory"
+        ],
+        "name of event": [
+            "event_name"
+        ],
+        "date of occurrence of event": [
+            "date"
+        ],
+        "time when the event is scheduled to start": [
+            "time"
+        ],
+        "number of seats to find event tickets for": [
+            "number_of_seats"
+        ],
+        "city where event is happening": [
+            "city_of_event"
+        ],
+        "name of event location": [
+            "event_location"
+        ],
+        "street address of event location": [
+            "address_of_location"
+        ]
+    },
+    "flights_3": {
+        "number of passengers to find flight seats for": [
+            "passengers"
+        ],
+        "fare class of flight booking": [
+            "flight_class"
+        ],
+        "city in which the journey originates": [
+            "origin_city"
+        ],
+        "city in which the journey ends": [
+            "destination_city"
+        ],
+        "number of the airport flying out from": [
+            "origin_airport_name"
+        ],
+        "number of the airport flying to": [
+            "destination_airport_name"
+        ],
+        "date of departure flight": [
+            "departure_date"
+        ],
+        "date of return flight": [
+            "return_date"
+        ],
+        "number of stops in the itinerary": [
+            "number_stops"
+        ],
+        "local time of departure of flight from origin to destination": [
+            "outbound_departure_time"
+        ],
+        "local time of arrival of flight from origin to destination": [
+            "outbound_arrival_time"
+        ],
+        "local time of arrival of flight from destination to origin": [
+            "inbound_arrival_time"
+        ],
+        "local time of departure of flight from destination to origin": [
+            "inbound_departure_time"
+        ],
+        "price per passenger of the itinerary": [
+            "price"
+        ],
+        "number of bags to check in": [
+            "number_checked_bags"
+        ],
+        "name of airline operating the flight": [
+            "airlines"
+        ],
+        "whether the flight arrives the next day": [
+            "arrives_next_day"
+        ]
+    },
+    "homes_1": {
+        "city where the apartment is located": [
+            "area"
+        ],
+        "address of the apartment": [
+            "address"
+        ],
+        "name of the apartment": [
+            "property_name"
+        ],
+        "phone number of the apartment": [
+            "phone_number"
+        ],
+        "boolean flag indicating if the property is furnished": [
+            "furnished"
+        ],
+        "boolean flag indicating if pets are allowed": [
+            "pets_allowed"
+        ],
+        "rent per month of the apartment": [
+            "rent"
+        ],
+        "date for the visit to the apartment": [
+            "visit_date"
+        ],
+        "number of bed rooms": [
+            "number_of_beds"
+        ],
+        "number of baths in the apartment": [
+            "number_of_baths"
+        ]
+    },
+    "hotels_1": {
+        "location of the hotel": [
+            "destination"
+        ],
+        "number of rooms in the reservation": [
+            "number_of_rooms"
+        ],
+        "start date for the reservation": [
+            "check_in_date"
+        ],
+        "number of days in the reservation": [
+            "number_of_days"
+        ],
+        "star rating of the hotel": [
+            "star_rating"
+        ],
+        "name of the hotel": [
+            "hotel_name"
+        ],
+        "address of the hotel": [
+            "street_address"
+        ],
+        "phone number of the hotel": [
+            "phone_number"
+        ],
+        "price per night for the reservation": [
+            "price_per_night"
+        ],
+        "boolean flag indicating if the hotel has wifi": [
+            "has_wifi"
+        ]
+    },
+    "hotels_4": {
+        "city or town where the accommodation is located": [
+            "location"
+        ],
+        "number of rooms to reserve": [
+            "number_of_rooms"
+        ],
+        "check in date for reservation": [
+            "check_in_date"
+        ],
+        "length of stay in days": [
+            "stay_length"
+        ],
+        "star rating of the accommodation": [
+            "star_rating"
+        ],
+        "name of the accommodation": [
+            "place_name"
+        ],
+        "street address of the accommodation": [
+            "street_address"
+        ],
+        "contact phone number of the accommodation": [
+            "phone_number"
+        ],
+        "price per night for the stay": [
+            "price_per_night"
+        ],
+        "whether or not smoking is allowed inside the place": [
+            "smoking_allowed"
+        ]
+    },
+    "media_2": {
+        "name of the movie": [
+            "movie_name"
+        ],
+        "main genre of the movie": [
+            "genre"
+        ],
+        "language to use for subtitles (or none for no subtitles)": [
+            "subtitle_language"
+        ],
+        "name of the director of the movie": [
+            "director"
+        ],
+        "name of an actor starring in the movie": [
+            "actors"
+        ],
+        "cost of renting movie": [
+            "price"
+        ]
+    },
+    "movies_2": {
+        "title for movie": [
+            "title"
+        ],
+        "genre of the movie": [
+            "genre"
+        ],
+        "aggregate user rating for movie, scale of 10": [
+            "aggregate_rating"
+        ],
+        "name of actor starring in movie": [
+            "starring"
+        ],
+        "name of director of the movie": [
+            "director"
+        ]
+    },
+    "music_1": {
+        "name of the song": [
+            "song_name"
+        ],
+        "artist who performed the song": [
+            "artist"
+        ],
+        "album the song belongs to": [
+            "album"
+        ],
+        "genre of the song": [
+            "genre"
+        ],
+        "year in which the song was released": [
+            "year"
+        ],
+        "playback device on which the song is to be played": [
+            "playback_device"
+        ]
+    },
+    "rentalcars_1": {
+        "category to which rental car belongs": [
+            "type"
+        ],
+        "model name of rental car": [
+            "car_name"
+        ],
+        "location of rental car pickup": [
+            "pickup_location"
+        ],
+        "date of rental car pickup": [
+            "pickup_date"
+        ],
+        "time of rental car pickup": [
+            "pickup_time"
+        ],
+        "city to pick up the rental car": [
+            "pickup_city"
+        ],
+        "date of rental car drop-off": [
+            "dropoff_date"
+        ],
+        "total price of car rental": [
+            "total_price"
+        ]
+    },
+    "restaurants_2": {
+        "name of the restaurant": [
+            "restaurant_name"
+        ],
+        "tentative date of restaurant reservation": [
+            "date"
+        ],
+        "tentative time of restaurant reservation": [
+            "time"
+        ],
+        "whether the restaurant has outdoor seating available": [
+            "has_seating_outdoors"
+        ],
+        "whether the restaurant has adequate vegetarian options": [
+            "has_vegetarian_options"
+        ],
+        "phone number to contact restaurant": [
+            "phone_number"
+        ],
+        "average user rating for restaurant on a scale of 5": [
+            "rating"
+        ],
+        "address of restaurant": [
+            "address"
+        ],
+        "number of seats to reserve at the restaurant": [
+            "number_of_seats"
+        ],
+        "price range for the restaurant": [
+            "price_range"
+        ],
+        "city where the restaurant is located": [
+            "location"
+        ],
+        "the category of food offered by the restaurant": [
+            "category"
+        ]
+    },
+    "ridesharing_1": {
+        "destination for taxi ride": [
+            "destination"
+        ],
+        "boolean flag whether ride is shared with other passengers": [
+            "shared_ride"
+        ],
+        "total fare for taxi ride": [
+            "ride_fare"
+        ],
+        "approximate duration of ride to the destination": [
+            "approximate_ride_duration"
+        ],
+        "number of riders to call taxi for": [
+            "number_of_riders"
+        ]
+    },
+    "services_4": {
+        "name of the therapist": [
+            "therapist_name"
+        ],
+        "contact number of the therapist": [
+            "phone_number"
+        ],
+        "address of the therapist": [
+            "address"
+        ],
+        "area where user wants to search for a therapist": [
+            "city"
+        ],
+        "date of the appointment": [
+            "appointment_date"
+        ],
+        "time of the appointment": [
+            "appointment_time"
+        ],
+        "type of the therapist": [
+            "type"
+        ]
+    },
+    "travel_1": {
+        "city or town where the attraction is located": [
+            "location"
+        ],
+        "common name of the attraction": [
+            "attraction_name"
+        ],
+        "category to which the attraction belongs": [
+            "category"
+        ],
+        "phone number to contact the attraction": [
+            "phone_number"
+        ],
+        "boolean flag indicating whether entrance to attraction is free": [
+            "free_entry"
+        ],
+        "boolean flag indicating whether attraction is good for to take kids to": [
+            "good_for_kids"
+        ]
+    },
+    "weather_1": {
+        "the possibility of rain or snow in percentage": [
+            "precipitation"
+        ],
+        "percentage humidity": [
+            "humidity"
+        ],
+        "wind speed in miles per hour": [
+            "wind"
+        ],
+        "temperature in fahrenheit": [
+            "temperature"
+        ],
+        "name of the city": [
+            "city"
+        ],
+        "date for the weather": [
+            "date"
+        ]
+    },
+    "buses_3": {
+        "the city to depart from": [
+            "from_city"
+        ],
+        "the destination city of the trip": [
+            "to_city"
+        ],
+        "name of station of departure": [
+            "from_station"
+        ],
+        "name of station of arrival": [
+            "to_station"
+        ],
+        "the date of departure": [
+            "departure_date"
+        ],
+        "the time of departure": [
+            "departure_time"
+        ],
+        "ticket price per passenger": [
+            "price"
+        ],
+        "whether to carry excess baggage in the bus": [
+            "additional_luggage"
+        ],
+        "the number of tickets for the trip": [
+            "num_passengers"
+        ],
+        "how many stops the route has": [
+            "category"
+        ]
+    },
+    "events_3": {
+        "type of cultural event": [
+            "event_type"
+        ],
+        "name of artist or play": [
+            "event_name"
+        ],
+        "date of event": [
+            "date"
+        ],
+        "start time of event": [
+            "time"
+        ],
+        "number of tickets to reserve for the event": [
+            "number_of_tickets"
+        ],
+        "price of each ticket": [
+            "price_per_ticket"
+        ],
+        "city where the event is taking place": [
+            "city"
+        ],
+        "exact venue of event": [
+            "venue"
+        ],
+        "street address of event venue": [
+            "venue_address"
+        ]
+    },
+    "flights_4": {
+        "the number of flight tickets for the trip": [
+            "number_of_tickets"
+        ],
+        "the cabin seat option": [
+            "seating_class"
+        ],
+        "the name of the airport or city to depart from": [
+            "origin_airport"
+        ],
+        "the name of the airport or city to arrive at": [
+            "destination_airport"
+        ],
+        "start date of the trip": [
+            "departure_date"
+        ],
+        "end date of the trip": [
+            "return_date"
+        ],
+        "whether the flight is a direct one": [
+            "is_nonstop"
+        ],
+        "departure time of the flight flying to the destination": [
+            "outbound_departure_time"
+        ],
+        "arrival time of the flight flying to the destination": [
+            "outbound_arrival_time"
+        ],
+        "arrival time of the flight coming back from the trip": [
+            "inbound_arrival_time"
+        ],
+        "departure time of the flight coming back from the trip": [
+            "inbound_departure_time"
+        ],
+        "the total cost of the flight tickets": [
+            "price"
+        ],
+        "the company that provides air transport services": [
+            "airlines"
+        ]
+    },
+    "homes_2": {
+        "whether to buy or rent a property": [
+            "intent"
+        ],
+        "city where the property is located": [
+            "area"
+        ],
+        "street address of property": [
+            "address"
+        ],
+        "name of property or apartment complex": [
+            "property_name"
+        ],
+        "contact number of property or apartment complex": [
+            "phone_number"
+        ],
+        "whether the property has a garage": [
+            "has_garage"
+        ],
+        "whether the property has in-unit laundry facilities": [
+            "in_unit_laundry"
+        ],
+        "sale price or per-month rent of property": [
+            "price"
+        ],
+        "date for visit to the property": [
+            "visit_date"
+        ],
+        "number of bedrooms in the property": [
+            "number_of_beds"
+        ],
+        "number of bathroom in the property": [
+            "number_of_baths"
+        ]
+    },
+    "hotels_2": {
+        "location of the house": [
+            "where_to"
+        ],
+        "number of people for the reservation": [
+            "number_of_adults"
+        ],
+        "start date for the reservation or to find the house": [
+            "check_in_date"
+        ],
+        "end date for the reservation or to find the house": [
+            "check_out_date"
+        ],
+        "review rating of the house": [
+            "rating"
+        ],
+        "address of the house": [
+            "address"
+        ],
+        "phone number of the house": [
+            "phone_number"
+        ],
+        "price per night of the house": [
+            "total_price"
+        ],
+        "boolean flag indicating if the house has laundry service": [
+            "has_laundry_service"
+        ]
+    },
+    "media_3": {
+        "title of the movie": [
+            "title"
+        ],
+        "category of the content": [
+            "genre"
+        ],
+        "language of the subtitles": [
+            "subtitle_language"
+        ],
+        "celebs acting in the movie": [
+            "starring"
+        ]
+    },
+    "messaging_1": {
+        "location to share with contact": [
+            "location"
+        ],
+        "name of contact to send to": [
+            "contact_name"
+        ]
+    },
+    "movies_1": {
+        "price per ticket": [
+            "price"
+        ],
+        "number of the movie tickets to be purchased": [
+            "number_of_tickets"
+        ],
+        "type of show": [
+            "show_type"
+        ],
+        "name of the theatre": [
+            "theater_name"
+        ],
+        "time of the show": [
+            "show_time"
+        ],
+        "date of the show": [
+            "show_date"
+        ],
+        "genre of the movie": [
+            "genre"
+        ],
+        "address of the theatre": [
+            "street_address"
+        ],
+        "city where the theatre is located": [
+            "location"
+        ],
+        "name of the movie": [
+            "movie_name"
+        ]
+    },
+    "movies_3": {
+        "name of the movie": [
+            "movie_title"
+        ],
+        "type of the movie": [
+            "genre"
+        ],
+        "average critic percentage rating": [
+            "percent_rating"
+        ],
+        "actors in the movie": [
+            "cast"
+        ],
+        "director of the movie": [
+            "directed_by"
+        ]
+    },
+    "music_3": {
+        "name of the song": [
+            "track"
+        ],
+        "performer's name": [
+            "artist"
+        ],
+        "collection of the song": [
+            "album"
+        ],
+        "type of the music": [
+            "genre"
+        ],
+        "year when the song was first released": [
+            "year"
+        ],
+        "place or name of the media player to play the song selected": [
+            "device"
+        ]
+    },
+    "payment_1": {
+        "the source of money used for making the payment": [
+            "payment_method"
+        ],
+        "the amount of money to send or request": [
+            "amount"
+        ],
+        "name of the contact or account to make the transaction with": [
+            "receiver"
+        ],
+        "whether the transaction is private or not": [
+            "private_visibility"
+        ]
+    },
+    "rentalcars_3": {
+        "type of the car": [
+            "car_type"
+        ],
+        "car model": [
+            "car_name"
+        ],
+        "place to pick up the car": [
+            "pickup_location"
+        ],
+        "the first date to start using the rental car": [
+            "start_date"
+        ],
+        "time for the pick-up": [
+            "pickup_time"
+        ],
+        "city where you want to rent the car": [
+            "city"
+        ],
+        "the date to return the car": [
+            "end_date"
+        ],
+        "the cost for renting the car per day": [
+            "price_per_day"
+        ],
+        "whether to purchase insurance": [
+            "add_insurance"
+        ]
+    },
+    "ridesharing_2": {
+        "destination address or location for cab": [
+            "destination"
+        ],
+        "type of cab ride": [
+            "ride_type"
+        ],
+        "total fare for cab ride": [
+            "ride_fare"
+        ],
+        "expected waiting time for pick-up by cab": [
+            "wait_time"
+        ],
+        "number of seats to reserve in the cab": [
+            "number_of_seats"
+        ]
+    },
+    "services_1": {
+        "name of the hair stylist/salon": [
+            "stylist_name"
+        ],
+        "phone number of the stylist/salon": [
+            "phone_number"
+        ],
+        "average review rating for the stylist/salon": [
+            "average_rating"
+        ],
+        "boolean flag indicating if the salon is unisex": [
+            "is_unisex"
+        ],
+        "address of the stylist/salon": [
+            "street_address"
+        ],
+        "city where the salon is located": [
+            "city"
+        ],
+        "date for the appointment": [
+            "appointment_date"
+        ],
+        "time of the appointment": [
+            "appointment_time"
+        ]
+    },
+    "trains_1": {
+        "starting city for train journey": [
+            "from"
+        ],
+        "ending city for train journey": [
+            "to"
+        ],
+        "name of station at starting city": [
+            "from_station"
+        ],
+        "name of station at ending city": [
+            "to_station"
+        ],
+        "date of train journey": [
+            "date_of_journey"
+        ],
+        "time of start of train journey": [
+            "journey_start_time"
+        ],
+        "total price of train reservation": [
+            "total"
+        ],
+        "number of adults to reserve train tickets for": [
+            "number_of_adults"
+        ],
+        "fare class for train reservation": [
+            "class"
+        ],
+        "whether to add trip protection to reservation, for a fee": [
+            "trip_protection"
+        ]
+    },
+    "banks_1": {
+        "the account type of the user": [
+            "account_type"
+        ],
+        "the account type of the recipient whom the user is transfering money to": [
+            "recipient_account_type"
+        ],
+        "the amount of money held in a bank account at a given time": [
+            "balance"
+        ],
+        "the amount of money to transfer": [
+            "amount"
+        ],
+        "the account name of the recipient who is to receive the transfered money": [
+            "recipient_account_name"
+        ]
+    },
+    "buses_2": {
+        "origin city for journey": [
+            "origin"
+        ],
+        "destination city for journey": [
+            "destination"
+        ],
+        "name of the bus terminus at the origin": [
+            "origin_station_name"
+        ],
+        "name of the bus terminus at the destination": [
+            "destination_station_name"
+        ],
+        "date of bus departure": [
+            "departure_date"
+        ],
+        "price per ticket of the itinerary": [
+            "price"
+        ],
+        "time of bus departure": [
+            "departure_time"
+        ],
+        "size of group for the booking": [
+            "group_size"
+        ],
+        "type of fare for the booking": [
+            "fare_type"
+        ]
+    },
+    "calendar_1": {
+        "date of event or for checking availability": [
+            "event_date"
+        ],
+        "start time of event": [
+            "event_time"
+        ],
+        "location of event": [
+            "event_location"
+        ],
+        "title of event": [
+            "event_name"
+        ],
+        "starting time of available time slot": [
+            "available_start_time"
+        ],
+        "ending time of available time slot": [
+            "available_end_time"
+        ]
+    },
+    "events_2": {
+        "type of event": [
+            "event_type"
+        ],
+        "the sport or music subcategory": [
+            "category"
+        ],
+        "name of match or artist for event": [
+            "event_name"
+        ],
+        "date of event": [
+            "date"
+        ],
+        "starting time for event": [
+            "time"
+        ],
+        "number of tickets to buy for event": [
+            "number_of_tickets"
+        ],
+        "city where the event is taking place": [
+            "city"
+        ],
+        "exact venue of event": [
+            "venue"
+        ],
+        "address of event venue": [
+            "venue_address"
+        ]
+    },
+    "flights_1": {
+        "number of passengers in the booking": [
+            "passengers"
+        ],
+        "seating class for the booking": [
+            "seating_class"
+        ],
+        "starting city for the trip": [
+            "origin_city"
+        ],
+        "ending city for the trip": [
+            "destination_city"
+        ],
+        "airport at the starting city for the trip": [
+            "origin_airport"
+        ],
+        "airport at the ending city for the trip": [
+            "destination_airport"
+        ],
+        "start date for the trip": [
+            "departure_date"
+        ],
+        "date of the return flight": [
+            "return_date"
+        ],
+        "number of layovers in the flight": [
+            "number_stops"
+        ],
+        "departure time for the outbound leg flight": [
+            "outbound_departure_time"
+        ],
+        "arrival time for the outbound leg flight": [
+            "outbound_arrival_time"
+        ],
+        "arrival time for the return leg flight": [
+            "inbound_arrival_time"
+        ],
+        "departure time for the return leg flight": [
+            "inbound_departure_time"
+        ],
+        "price of the booking per passenger": [
+            "price"
+        ],
+        "whether the booking is refundable or not": [
+            "refundable"
+        ],
+        "name of airline": [
+            "airlines"
+        ]
+    },
+    "flights_2": {
+        "number of passengers to book tickets for": [
+            "passengers"
+        ],
+        "seating class for the flight tickets": [
+            "seating_class"
+        ],
+        "city of origin for the flight": [
+            "origin"
+        ],
+        "city of destination for the flight": [
+            "destination"
+        ],
+        "airport where the flight is departing from": [
+            "origin_airport"
+        ],
+        "airport where the flight is arriving to": [
+            "destination_airport"
+        ],
+        "date of departure flight on the ticket": [
+            "departure_date"
+        ],
+        "date of return flight on the ticket": [
+            "return_date"
+        ],
+        "number of stopovers made by the flight": [
+            "number_stops"
+        ],
+        "departure time of the origin-destination flight": [
+            "outbound_departure_time"
+        ],
+        "arrival time of the origin-destination flight": [
+            "outbound_arrival_time"
+        ],
+        "arrival time of the destination-origin flight": [
+            "inbound_arrival_time"
+        ],
+        "departure time of the destination-origin flight": [
+            "inbound_departure_time"
+        ],
+        "ticket fare for each passenger": [
+            "fare"
+        ],
+        "boolean flag indicating whether the flight is a red-eye flight": [
+            "is_redeye"
+        ],
+        "name of the airline to book with": [
+            "airlines"
+        ]
+    },
+    "hotels_3": {
+        "location of the hotel": [
+            "location"
+        ],
+        "number of rooms to book": [
+            "number_of_rooms"
+        ],
+        "start date for the hotel reservation": [
+            "check_in_date"
+        ],
+        "end date for the hotel reservation": [
+            "check_out_date"
+        ],
+        "average review rating for the hotel": [
+            "average_rating"
+        ],
+        "name of the hotel": [
+            "hotel_name"
+        ],
+        "address of the hotel": [
+            "street_address"
+        ],
+        "phone number of the hotel": [
+            "phone_number"
+        ],
+        "total price for the stay": [
+            "price"
+        ],
+        "boolean flag indicating if pets are allowed in the hotel": [
+            "pets_welcome"
+        ]
+    },
+    "media_1": {
+        "title of the movie": [
+            "title"
+        ],
+        "genre of the movie": [
+            "genre"
+        ],
+        "boolean flag indicating if subtitles are desired for this movie": [
+            "subtitles"
+        ],
+        "name of the director of the movie": [
+            "directed_by"
+        ]
+    },
+    "music_2": {
+        "name of the song": [
+            "song_name"
+        ],
+        "name of the artist the song is performed by": [
+            "artist"
+        ],
+        "album the song belongs to": [
+            "album"
+        ],
+        "genre of the song": [
+            "genre"
+        ],
+        "playback device on which the song is to be played": [
+            "playback_device"
+        ]
+    },
+    "rentalcars_2": {
+        "type of car for rental": [
+            "car_type"
+        ],
+        "name of car model": [
+            "car_name"
+        ],
+        "pickup location for car rental": [
+            "pickup_location"
+        ],
+        "date of pickup for car rental": [
+            "pickup_date"
+        ],
+        "time of pickup for car rental": [
+            "pickup_time"
+        ],
+        "city in which to pick up rental car": [
+            "pickup_city"
+        ],
+        "end date of car rental reservation": [
+            "dropoff_date"
+        ],
+        "total price of rental reservation": [
+            "total_price"
+        ]
+    },
+    "restaurants_1": {
+        "name of the restaurant": [
+            "restaurant_name"
+        ],
+        "date for the reservation or to find availability": [
+            "date"
+        ],
+        "time for the reservation or to find availability": [
+            "time"
+        ],
+        "boolean flag indicating if the restaurant serves alcohol": [
+            "serves_alcohol"
+        ],
+        "boolean flag indicating if the restaurant has live music": [
+            "has_live_music"
+        ],
+        "phone number of the restaurant": [
+            "phone_number"
+        ],
+        "address of the restaurant": [
+            "street_address"
+        ],
+        "party size for a reservation": [
+            "party_size"
+        ],
+        "price range for the restaurant": [
+            "price_range"
+        ],
+        "city in which the restaurant is located": [
+            "city"
+        ],
+        "cuisine of food served in the restaurant": [
+            "cuisine"
+        ]
+    },
+    "services_2": {
+        "name of the dentist": [
+            "dentist_name"
+        ],
+        "phone number of the dentist": [
+            "phone_number"
+        ],
+        "address of the dentist": [
+            "address"
+        ],
+        "city where the dentist is located": [
+            "city"
+        ],
+        "date for the appointment": [
+            "appointment_date"
+        ],
+        "time for the appointment": [
+            "appointment_time"
+        ],
+        "boolean flag indicating if the dentist offers cosmetic services": [
+            "offers_cosmetic_services"
+        ]
+    },
+    "services_3": {
+        "name of the doctor or the medical practice": [
+            "doctor_name"
+        ],
+        "contact number for the doctor or the medical practice": [
+            "phone_number"
+        ],
+        "average review rating of the doctor": [
+            "average_rating"
+        ],
+        "address of the doctor": [
+            "street_address"
+        ],
+        "city where the doctor is located": [
+            "city"
+        ],
+        "date for scheduling the appointment with the doctor": [
+            "appointment_date"
+        ],
+        "time for the appointment with the doctor": [
+            "appointment_time"
+        ],
+        "speciality of the doctor": [
+            "type"
+        ]
+    },
+    "hotel": {
+        "price budget of the hotel": [
+            "pricerange", "price"
+        ],
+        "what is the type of the hotel": [
+            "type"
+        ],
+        "whether the hotel has parking": [
+            "parking"
+        ],
+        "day of the hotel booking": [
+            "bookday", "day"
+        ],
+        "number of people for the hotel booking": [
+            "bookpeople", "people"
+        ],
+        "length of stay at the hotel": [
+            "bookstay", "stay"
+        ],
+        "star rating of the hotel": [
+            "stars"
+        ],
+        "whether the hotel has internet": [
+            "internet"
+        ],
+        "name of the hotel": [
+            "name"
+        ],
+        "area or place of the hotel": [
+            "area"
+        ],
+        "address of the hotel": [
+            "address", "addr"
+        ],
+        "phone number of the hotel": [
+            "phone"
+        ],
+        "postal code of the hotel": [
+            "postcode", "post"
+        ],
+        "reference number of the hotel booking": [
+            "ref"
+        ]
+    },
+    "train": {
+        "arrival time of the train": [
+            "arriveby", "arrive"
+        ],
+        "name of the train": [
+            "name"
+        ],
+        "departure location of the train": [
+            "departure", "depart"
+        ],
+        "day of the train": [
+            "day"
+        ],
+        "how many train tickets you need": [
+            "bookpeople", "people"
+        ],
+        "leaving time for the train": [
+            "leaveat", "leave"
+        ],
+        "destination of the train": [
+            "destination", "dest"
+        ],
+        "id of the train": [
+            "trainid", "id"
+        ],
+        "reference number of the train booking": [
+            "ref"
+        ],
+        "price of the train": [
+            "price", "ticket"
+        ],
+        "duration of the travel": [
+            "duration", "time"
+        ]
+    },
+    "attraction": {
+        "area to search for attractions": [
+            "area"
+        ],
+        "name of the attraction": [
+            "name"
+        ],
+        "type of the attraction": [
+            "type"
+        ],
+        "how much is the entrance fee": [
+            "entrancefee", "fee", "price"
+        ],
+        "open hours of the attraction": [
+            "openhours"
+        ],
+        "address of the attraction": [
+            "address", "addr"
+        ],
+        "phone number of the attraction": [
+            "phone"
+        ],
+        "postal code of the attraction": [
+            "postcode", "post"
+        ],
+        "whether the attraction has parking": [
+            "parking"
+        ]
+    },
+    "restaurant": {
+        "price budget for the restaurant": [
+            "pricerange", "price"
+        ],
+        "area or place of the restaurant": [
+            "area"
+        ],
+        "the cuisine of the restaurant you are looking for": [
+            "food"
+        ],
+        "name of the restaurant": [
+            "name"
+        ],
+        "day of the restaurant booking": [
+            "bookday", "day"
+        ],
+        "how many people for the restaurant reservation": [
+            "bookpeople", "people"
+        ],
+        "time of the restaurant booking": [
+            "booktime", "time"
+        ],
+        "address of the restaurant": [
+            "address", "addr"
+        ],
+        "phone number of the restaurant": [
+            "phone"
+        ],
+        "postal code of the restaurant": [
+            "postcode", "post"
+        ],
+        "reference number of the restaurant booking": [
+            "ref"
+        ]
+    },
+    "hospital": {
+        "type of medical care": [
+            "department"
+        ],
+        "address of the hospital": [
+            "address"
+        ],
+        "phone number of the hospital": [
+            "phone"
+        ],
+        "postal code of the hospital": [
+            "postcode"
+        ],
+        "name of the hospital": [
+            "name"
+        ]
+    },
+    "taxi": {
+        "leaving time of taxi": [
+            "leaveat", "leave"
+        ],
+        "name of taxi": [
+            "name"
+        ],
+        "destination of taxi": [
+            "destination", "dest"
+        ],
+        "departure location of taxi": [
+            "departure", "depart"
+        ],
+        "arrival time of taxi": [
+            "arriveby", "arrive"
+        ],
+        "car type of the taxi": [
+            "type", "car"
+        ],
+        "phone number of taxi": [
+            "phone"
+        ],
+        "number of choices of taxi": [
+            "choice"
+        ],
+        "how many people for taxi reservation": [
+            "bookpeople"
+        ],
+        "day of the taxi booking": [
+            "bookday"
+        ]
+    },
+    "bus": {
+        "departure location of bus": [
+            "departure"
+        ],
+        "destination of bus": [
+            "destination"
+        ],
+        "leaving time of bus": [
+            "leaveat"
+        ],
+        "day to use the bus tickets": [
+            "day"
+        ]
+    },
+    "police": {
+        "address of the police station": [
+            "address", "addr"
+        ],
+        "phone number of the police station": [
+            "phone"
+        ],
+        "postal code of the police station": [
+            "postcode"
+        ],
+        "name of the police station": [
+            "name"
+        ],
+        "type of police station": [
+            "department"
+        ]
+    }
+}

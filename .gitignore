@@ -1,3 +1,6 @@
 wandb/
 venv/
-data/interim/
+data/data interim/
+data/data raw/
+models/
+output/

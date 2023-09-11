@@ -38,12 +38,12 @@ class DialConverter(AbstractCoverter):
             self,
             file_path: str,
             save_path:str,
-            tag_speaker:str = 'USER',
-            tag_agent:str = 'AGENT',
+            tag_user:str = 'USER',
+            tag_system:str = 'AGENT',
             window_context: int = 0):
         super().__init__(file_path, save_path)
-        self.tag_speaker = tag_speaker
-        self.tag_agent = tag_agent
+        self.tag_user = tag_user
+        self.tag_system = tag_system
         self.window_context = window_context if window_context > -1 else -1
 
     @abc.abstractmethod
