@@ -123,7 +123,7 @@ class Trainer:
 
         if self.with_tracking:
             accelerator_log_kwargs["log_with"] = self.report_to
-            accelerator_log_kwargs["logging_dir"] = self.output_dir
+            accelerator_log_kwargs["project_dir"] = self.output_dir
 
         accelerator = Accelerator(gradient_accumulation_steps=self.gradient_accumulation_steps,
                                   **accelerator_log_kwargs)
