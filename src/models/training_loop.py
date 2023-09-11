@@ -242,7 +242,7 @@ class Trainer:
                     i+=1
         # Metric
         
-        metrics = ['rouge', 'bleu', 'rsa', 'jga'] if self.module == 'dst' else ['rouge', 'bleu']
+        metrics = ['rouge', 'bleu']
         evaluator = Evaluation(eval_dataloaders = dataloaders['eval'],
                                ignore_pad_token_for_loss = self.ignore_pad_token_for_loss,
                                metrics_name = metrics,
