@@ -17,11 +17,11 @@ def formatstring(label):
     # Split the string at '||' and create a list of slots_of_domains
     # "<TYPE> TOD <ACTION> negate|restaurants_2-none-none ~ thank|general-none-none <STATE> restaurants_2-slot10-sfo ~ restaurants_2-slot0-namu gaji ~ restaurants_2-slot2-1 pm ~ restaurants_2-slot1-march 1st ~ restaurants_2-slot8-2"
 
-    type_current = label.split('<ACTION>')
+    type_current = label.split('ACTION>')
     # ["<TYPE> TOD ", " negate|restaurants_2-none-none ~ thank|general-none-none <STATE> restaurants_2-slot10-sfo ~ restaurants_2-slot0-namu gaji ~ restaurants_2-slot2-1 pm ~ restaurants_2-slot1-march 1st ~ restaurants_2-slot8-2"]
 
     type = "TOD" if "TOD" in type_current[0] else "ODD" # "<TYPE> TOD "
-    current_action_state = type_current[1].split('<STATE>')
+    current_action_state = type_current[1].split('STATE>')
     # [" negate|restaurants_2-none-none ~ thank|general-none-none ", " restaurants_2-slot10-sfo ~ restaurants_2-slot0-namu gaji ~ restaurants_2-slot2-1 pm ~ restaurants_2-slot1-march 1st ~ restaurants_2-slot8-2"]
 
     list_current_action = current_action_state[0].split("~")
