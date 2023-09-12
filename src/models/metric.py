@@ -24,10 +24,10 @@ def formatstring(label):
     current_action_state = type_current[1].split('STATE>')
     # [" negate|restaurants_2-none-none ~ thank|general-none-none ", " restaurants_2-slot10-sfo ~ restaurants_2-slot0-namu gaji ~ restaurants_2-slot2-1 pm ~ restaurants_2-slot1-march 1st ~ restaurants_2-slot8-2"]
 
-    list_current_action = current_action_state[0].split("~")
+    list_current_action = current_action_state[0].split(" ")
     # [" negate|restaurants_2-none-none ", " thank|general-none-none "]
 
-    list_current_state = current_action_state[1].split("~")
+    list_current_state = current_action_state[1].split(" ")
     # [" restaurants_2-slot10-sfo ", " restaurants_2-slot0-namu gaji ", " restaurants_2-slot2-1 pm ", " restaurants_2-slot1-march 1st ", " restaurants_2-slot8-2"]
 
     for i in range(len(list_current_action)):
