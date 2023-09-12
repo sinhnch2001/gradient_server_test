@@ -131,13 +131,13 @@ class FushedChatConverter(DialConverter):
             for current_action in list_current_action:
                 current_action = current_action.split("|")
                 action = current_action[0]
-                if action == "INFORM":
+                if action == "inform":
                     dsv = current_action[1]
                     dsv = dsv.split("-")
                     domain = dsv[0]
                     slot = dsv[1]
                     value = dsv[2]
-                    if slot != "none" or value != "none":
+                    if slot != "none" and value != "none":
                         if domain not in dict_state_one_dialogue.keys():
                             dict_state_one_dialogue.setdefault(domain, dict())
                         if slot not in dict_state_one_dialogue[domain].keys():

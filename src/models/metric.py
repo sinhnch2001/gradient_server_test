@@ -12,52 +12,41 @@ import json
 from datasets import DownloadConfig
 from sklearn.metrics import f1_score
 
-def formatstring(input_string):
-    if "inform" not in input_string:
-        return []
-
+def formatstring(label):
     # Split the string at '||' and create a list of slots_of_domains
-    # "HOTEL:[inform(slot0=24:30) and inform(slot1=hotel)] || TRAIN:[inform(slot5=leicester) and inform(slot2=wednesday)]"
+    # "<TYPE> TOD <ACTION> negate|restaurants_2-none-none ~ thank|general-none-none <STATE> restaurants_2-slot10-sfo ~ restaurants_2-slot0-namu gaji ~ restaurants_2-slot2-1 pm ~ restaurants_2-slot1-march 1st ~ restaurants_2-slot8-2"
 
-    slots_of_domains = input_string.lower().split('||')
-    # ["HOTEL:[inform(slot0=24:30) and inform(slot1=hotel)]", "TRAIN:[inform(slot5=leicester) and inform(slot2=wednesday)]"]
+    type_current = label.split('<ACTION>')
+    # ["<TYPE> TOD ", " negate|restaurants_2-none-none ~ thank|general-none-none <STATE> restaurants_2-slot10-sfo ~ restaurants_2-slot0-namu gaji ~ restaurants_2-slot2-1 pm ~ restaurants_2-slot1-march 1st ~ restaurants_2-slot8-2"]
 
-    dict_domain_slots = dict()
-    for slots_of_domain in slots_of_domains:
-        domain_slots = slots_of_domain.strip().split(':[')
-        # ["HOTEL", "inform(slot0=24:30) and inform(slot1=hotel)]"]
+    type = "TOD" if "TOD" in type_current[0] else "ODD" # "<TYPE> TOD "
+    current_action_state = type_current[1].split('<STATE>')
+    # [" negate|restaurants_2-none-none ~ thank|general-none-none ", " restaurants_2-slot10-sfo ~ restaurants_2-slot0-namu gaji ~ restaurants_2-slot2-1 pm ~ restaurants_2-slot1-march 1st ~ restaurants_2-slot8-2"]
 
-        domain = domain_slots[0].strip() # "HOTEL"
-        slots = domain_slots[1].strip()
-        # "inform(slot0=24:30) and inform(slot1=hotel)]"
-        slots = slots[0:-2].split(')')
-        # ["inform(slot0=24:30", " and inform(slot1=hotel"]
-        dict_state = {}
-        for action_slot_value in slots:
-            # " and inform(slot0=24:30)"
-            if "inform(slot" in action_slot_value:
-                if action_slot_value.strip()[:3] == "and":
-                    action_slot_value = action_slot_value.strip()[4:]
-                slot = action_slot_value.strip()[7:12]
-                value = action_slot_value.strip()[13:]
-                dict_state.setdefault(slot, value)
-                # {"slot0":"24:30", "slot1":"hotel"}
-        dict_domain_slots.setdefault(domain, dict_state)
-        # {"HOTEL":{"slot0":"24:30", "slot1":"hotel"}, "TRAIN":{"slot5":"leicester", "slot2":"wednesday"}]
-    output = []
-    for domain, slots_values in dict_domain_slots.items():
-        for slot, value in slots_values.items():
-            dsv = domain+"-"+slot+"-"+value
-            output.append(dsv)
-    return output
+    list_current_action = current_action_state[0].split("~")
+    # [" negate|restaurants_2-none-none ", " thank|general-none-none "]
 
-# test = json.load(open(r"C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\KETOD\test.json"))
+    list_current_state = current_action_state[1].split("~")
+    # [" restaurants_2-slot10-sfo ", " restaurants_2-slot0-namu gaji ", " restaurants_2-slot2-1 pm ", " restaurants_2-slot1-march 1st ", " restaurants_2-slot8-2"]
+
+    for i in range(len(list_current_action)):
+        list_current_action[i] = list_current_action[i].strip().replace("|","-")
+    for i in range(len(list_current_state)):
+        list_current_state[i] = list_current_state[i].strip()
+    if "" in list_current_action and len(list_current_action) == 1:
+        list_current_action = []
+    if "" in list_current_state and len(list_current_state) == 1:
+        list_current_state = []
+
+    return type, list_current_action, list_current_state
+
+# test = json.load(open(r"C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\FUSEDCHAT\test.json"))
 # all_output = {}
 # for dial in test:
 #     label = dial["label"]
 #     output = formatstring(label)
 #     all_output.setdefault(label, output)
-# with open(r"C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\KETOD\test_output.json", 'w') as f:
+# with open(r"C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\FUSEDCHAT\test_output.json", 'w') as f:
 #     json.dump(all_output, f, indent=4)
 
 class Metric:
@@ -85,8 +74,8 @@ class Metric:
                 self.label_slot.append(decoded_labels[i])
         else:
             for i in range(len(decoded_preds)):
-                p_slot = formatstring(decoded_preds[i])
-                l_slot = formatstring(decoded_labels[i])
+                _,_,p_slot = formatstring(decoded_preds[i])
+                _,_,l_slot = formatstring(decoded_labels[i])
                 self.predict_slot.append(p_slot)
                 self.label_slot.append(l_slot)
 
