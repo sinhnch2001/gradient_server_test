@@ -149,6 +149,6 @@ class StateDataLoader:
                                 sampler=sampler,
                                 collate_fn=self.dynamic_collate,
                                 batch_size=self.batch_size,
-                                drop_last=True,)
+                                drop_last=False)
 
         return dataloader
