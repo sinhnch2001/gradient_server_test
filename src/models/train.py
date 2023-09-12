@@ -34,7 +34,7 @@ def parse_args(args):
                         help ="Model name for fine-tuning")
     parser.add_argument('--num_train_epochs', type=int, default=10,
                         help="number training epochs")
-    parser.add_argument('--max_target_length', type=int, default=60,
+    parser.add_argument('--max_target_length', type=int, default=400,
                         help="max length labels tokenize")
     parser.add_argument('--num_beams', type=int, default=4,
                         help="number of beams")
