@@ -17,7 +17,7 @@ def parse_args(args):
     parser.add_argument('--module', type=str, help="Type module")
     parser.add_argument('--test_files', nargs='+', help= "Directory to test file (can be multiple files)")
     parser.add_argument('--ignore_pad_token_for_loss', type=bool, default=True, help="ignore_pad_token_for_loss")
-    parser.add_argument('--model_name', type=str, default="google/flan-t5-base", help="model name")
+    parser.add_argument('--model_name', type=str, default="google/flan-t5-small", help="model name")
     parser.add_argument('--path_to_save_dir', type=str, help="Path to the save directory json file")
     parser.add_argument('--log_input_label_predict', type=str, help="Path to the save directory json file")
     parser.add_argument('--max_target_length', type=int, default=80, help="Max target length")
