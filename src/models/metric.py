@@ -13,6 +13,7 @@ from datasets import DownloadConfig
 from sklearn.metrics import f1_score
 
 def formatstring(label):
+    print(label)
     # Split the string at '||' and create a list of slots_of_domains
     # "<TYPE> TOD <ACTION> negate|restaurants_2-none-none ~ thank|general-none-none <STATE> restaurants_2-slot10-sfo ~ restaurants_2-slot0-namu gaji ~ restaurants_2-slot2-1 pm ~ restaurants_2-slot1-march 1st ~ restaurants_2-slot8-2"
 
