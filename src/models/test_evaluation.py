@@ -142,6 +142,7 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
 import argparse
+sys.path.insert(0,r'./')
 from src.data.dataloader_GradRes import ResDataLoader
 from src.data.dataloader_GradSearch import StateDataLoader
 from accelerate import Accelerator
