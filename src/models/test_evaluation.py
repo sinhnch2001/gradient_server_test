@@ -193,7 +193,7 @@ def main(args):
     tokenizer = AutoTokenizer.from_pretrained(args.model_name)
     model = AutoModelForSeq2SeqLM.from_pretrained(args.model_name)
     model.load_state_dict(torch.load(args.path_to_save_dir))
-
+    print("hahahhhahahha")
     accelerator = Accelerator()
     accelerator.gradient_accumulation_steps = args.gradient_accumulation_steps
 
