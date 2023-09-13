@@ -1,4 +1,4 @@
-CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file /kaggle/working/gradient_server_test/src/config/config_fsdp.yaml /kaggle/working/gradient_server_test/src/models/decode_test_to_evaluate.py 	\
+CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file /kaggle/working/gradient_server_test/src/config/config_fsdp.yaml /kaggle/working/gradient_server_test/src/models/test_evaluation.py 	\
 	--module 'dst_tod' \
 	--test_files '/kaggle/input/interim-data/GradSearch/GradSearch/SGD/test.json' \
   --batch_size 8 \
