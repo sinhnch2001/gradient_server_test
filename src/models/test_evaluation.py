@@ -224,7 +224,7 @@ def main(args):
     elif args.module == "dst_odd":
         dataloaders = StateDataLoader(**dataloader_args).__call__()
         metrics_name = ["f1"]
-
+    print("hahahhhahahha")
     model, dataloaders['test'], tokenizer = accelerator.prepare(model, dataloaders['test'], tokenizer)
 
     accelerator.wait_for_everyone()
