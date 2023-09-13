@@ -193,7 +193,7 @@ def main(args):
     tokenizer = AutoTokenizer.from_pretrained(args.model_name)
     model = AutoModelForSeq2SeqLM.from_pretrained(args.model_name)
     model.load_state_dict(torch.load(args.path_to_save_dir))
-    print("hahahhhahahha")
+
     accelerator = Accelerator()
     accelerator.gradient_accumulation_steps = args.gradient_accumulation_steps
 
@@ -224,7 +224,7 @@ def main(args):
     elif args.module == "dst_odd":
         dataloaders = StateDataLoader(**dataloader_args).__call__()
         metrics_name = ["f1"]
-    print("hahahhhahahha")
+
     model, dataloaders['test'], tokenizer = accelerator.prepare(model, dataloaders['test'], tokenizer)
 
     accelerator.wait_for_everyone()
@@ -286,3 +286,6 @@ def postprocess_text(preds, labels):
     preds = ["\n".join(nltk.sent_tokenize(pred)) for pred in preds]
     labels = ["\n".join(nltk.sent_tokenize(label)) for label in labels]
     return preds, labels
+
+if __name__ == "__main__":
+     main(sys.argv[1:])
