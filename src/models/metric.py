@@ -14,31 +14,31 @@ from sklearn.metrics import f1_score
 
 def formatstring(label):
     # Split the string at '||' and create a list of slots_of_domains
-    # "<TYPE> TOD <ACTION> negate|restaurants_2-none-none ~ thank|general-none-none <STATE> restaurants_2-slot10-sfo ~ restaurants_2-slot0-namu gaji ~ restaurants_2-slot2-1 pm ~ restaurants_2-slot1-march 1st ~ restaurants_2-slot8-2"
+    # "(type) TOD (current action) negate>restaurants_2-none-none | thank>general-none-none (current state) restaurants_2-slot10-sfo | restaurants_2-slot0-namu gaji | restaurants_2-slot2-1 pm | restaurants_2-slot1-march 1st | restaurants_2-slot8-2"
 
-    type_current = label.split('ACTION>') if '<' not in label else  label.split('<ACTION>')
-    # ["<TYPE> TOD ", " negate|restaurants_2-none-none ~ thank|general-none-none <STATE> restaurants_2-slot10-sfo ~ restaurants_2-slot0-namu gaji ~ restaurants_2-slot2-1 pm ~ restaurants_2-slot1-march 1st ~ restaurants_2-slot8-2"]
+    type_current = label.split('(current action)')
+    # ["(type) TOD ", " negate>restaurants_2-none-none | thank>general-none-none (current state) restaurants_2-slot10-sfo | restaurants_2-slot0-namu gaji | restaurants_2-slot2-1 pm | restaurants_2-slot1-march 1st | restaurants_2-slot8-2"]
 
-    type = "TOD" if "TOD" in type_current[0] else "ODD" # "<TYPE> TOD "
-    current_action_state = type_current[1].split('STATE>') if '<' not in type_current[1] else  type_current[1].split('<STATE>')
-    # [" negate|restaurants_2-none-none ~ thank|general-none-none ", " restaurants_2-slot10-sfo ~ restaurants_2-slot0-namu gaji ~ restaurants_2-slot2-1 pm ~ restaurants_2-slot1-march 1st ~ restaurants_2-slot8-2"]
+    type = "TOD" if "TOD" in type_current[0] else "ODD" # "(type) TOD "
+    current_action_state = type_current[1].split('(current state)')
+    # [" negate>restaurants_2-none-none | thank>general-none-none ", " restaurants_2-slot10-sfo | restaurants_2-slot0-namu gaji | restaurants_2-slot2-1 pm | restaurants_2-slot1-march 1st | restaurants_2-slot8-2"]
 
-    list_current_action = current_action_state[0].split(" ") if '~' not in current_action_state[0] else current_action_state[0].split("~")
-    # [" negate|restaurants_2-none-none ", " thank|general-none-none "]
+    current_action = current_action_state[0].split("|")
+    # [" negate>restaurants_2-none-none ", " thank>general-none-none "]
 
-    list_current_state = current_action_state[1].split(" ") if '~' not in current_action_state[1] else current_action_state[1].split("~")
+    current_state = current_action_state[1].split("|")
     # [" restaurants_2-slot10-sfo ", " restaurants_2-slot0-namu gaji ", " restaurants_2-slot2-1 pm ", " restaurants_2-slot1-march 1st ", " restaurants_2-slot8-2"]
 
-    for i in range(len(list_current_action)):
-        list_current_action[i] = list_current_action[i].strip().replace("|","-")
-    for i in range(len(list_current_state)):
-        list_current_state[i] = list_current_state[i].strip()
-    if "" in list_current_action and len(list_current_action) == 1:
-        list_current_action = []
-    if "" in list_current_state and len(list_current_state) == 1:
-        list_current_state = []
+    for i in range(len(current_action)):
+        current_action[i] = current_action[i].strip().replace(">","-")
+    for i in range(len(current_state)):
+        current_state[i] = current_state[i].strip()
+    if "" in current_action and len(current_action) == 1:
+        current_action = []
+    if "" in current_state and len(current_state) == 1:
+        current_state = []
 
-    return type, list_current_action, list_current_state
+    return type, current_action, current_state
 
 # test = json.load(open(r"C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\FUSEDCHAT\test.json"))
 # all_output = {}
@@ -52,8 +52,12 @@ def formatstring(label):
 class Metric:
     def __init__(self, metric_name):
         self.metric_name = metric_name
-        self.predict_slot = []
-        self.label_slot = []
+        self.list_predict_type = []
+        self.list_label_type = []
+        self.list_predict_current_action = []
+        self.list_label_current_action = []
+        self.list_predict_current_state = []
+        self.list_label_current_state = []
         self.num_slot_domain_fusedchat = 65
         self.seen_ketod = ['SERVICES_1', 'CALENDAR_1', 'RIDESHARING_2', 'MUSIC_2', 'SERVICES_2', 'HOTELS_3', 'HOTELS_1', 'HOMES_1', 'BUSES_2', 'RIDESHARING_1', 'TRAVEL_1', 'MEDIA_1', 'WEATHER_1', 'EVENTS_1', 'MUSIC_1', 'MOVIES_1', 'FLIGHTS_1', 'RESTAURANTS_1', 'RENTALCARS_2', 'BUSES_1', 'SERVICES_3', 'RENTALCARS_1', 'EVENTS_2', 'FLIGHTS_2', 'HOTELS_2']
         self.unseen_ketod = ['SERVICES_4', 'HOMES_2', 'MUSIC_3', 'TRAINS_1', 'MEDIA_3', 'PAYMENT_1', 'MESSAGING_1', 'RESTAURANTS_2', 'BUSES_3', 'MOVIES_3', 'EVENTS_3', 'FLIGHTS_4', 'RENTALCARS_3', 'HOTELS_4']
@@ -74,10 +78,15 @@ class Metric:
                 self.label_slot.append(decoded_labels[i])
         else:
             for i in range(len(decoded_preds)):
-                _,_,p_slot = formatstring(decoded_preds[i])
-                _,_,l_slot = formatstring(decoded_labels[i])
-                self.predict_slot.append(p_slot)
-                self.label_slot.append(l_slot)
+                predict_type, predict_current_action, predict_current_state = formatstring(decoded_preds[i])
+                label_type  , label_current_action  , label_current_state   = formatstring(decoded_labels[i])
+
+                self.list_predict_type.append(predict_type)
+                self.list_predict_current_action.append(predict_current_action)
+                self.list_predict_current_state.append(predict_current_state)
+                self.list_label_type.append(label_type)
+                self.list_label_current_action.append(label_current_action)
+                self.list_label_current_state.append(label_current_state)
 
     def compute(self):
         if self.metric_name == "rouge":
@@ -115,14 +124,14 @@ class Metric:
             JGA_total = []
             JGA_seen = []
             JGA_unseen = []
-            for index in range(0, len(self.label_slot)):
-                JGA = 1 if set(self.label_slot[index]) == set(self.predict_slot[index]) else 0
+            for index in range(0, len(self.list_label_current_state)):
+                JGA = 1 if set(self.list_label_current_state[index]) == set(self.list_predict_current_state[index]) else 0
                 JGA_total.append(JGA)
-                for slot in self.label_slot[index]:
+                for slot in self.list_label_current_state[index]:
                     if slot.split("-")[0].upper() in self.unseen_ketod:
                         JGA_unseen.append(JGA)
                         break
-                    if slot == self.label_slot[index][-1]:
+                    if slot == self.list_label_current_state[index][-1]:
                         JGA_seen.append(JGA)
             if len(JGA_seen) > 0 and len(JGA_unseen) > 0:
                 result = {"JGA_avg":round(sum(JGA_total)/len(JGA_total)*100, 4),
@@ -136,9 +145,9 @@ class Metric:
         elif self.metric_name == "rsa":
             RSA_total = []
             for index in range(0, len(self.label_slot)):
-                T = set(self.label_slot[index]) | set(self.predict_slot[index])
-                M = set(self.label_slot[index]) - set(self.predict_slot[index])
-                W = set(self.predict_slot[index]) - set(self.label_slot[index])
+                T = set(self.list_label_current_state[index]) | set(self.list_predict_current_state[index])
+                M = set(self.list_label_current_state[index]) - set(self.list_predict_current_state[index])
+                W = set(self.list_predict_current_state[index]) - set(self.list_label_current_state[index])
                 if len(T) > 0:
                     RSA = len(T-M-W)/len(T)
                     RSA_total.append(RSA)
@@ -148,8 +157,8 @@ class Metric:
             SA_total = []
             for index in range(0, len(self.label_slot)):
                 T = self.num_slot_domain_fusedchat
-                M = set(self.label_slot[index]) - set(self.predict_slot[index])
-                W = set(self.predict_slot[index]) - set(self.label_slot[index])
+                M = set(self.list_label_current_state[index]) - set(self.list_predict_current_state[index])
+                W = set(self.list_predict_current_state[index]) - set(self.list_label_current_state[index])
                 if T > 0:
                     SA = (T-len(M)-len(W))/T
                     SA_total.append(SA)
@@ -159,14 +168,14 @@ class Metric:
             AGA_total = []
             AGA_seen = []
             AGA_unseen = []
-            for index in range(0, len(self.label_slot)):
-                AGA = len(set(self.label_slot[index]).intersection(set(self.predict_slot[index]))) / len(set(self.label_slot[index]))
+            for index in range(0, len(self.list_label_current_state)):
+                AGA = len(set(self.list_label_current_state[index]).intersection(set(self.list_predict_current_state[index]))) / len(set(self.list_label_current_state[index]))
                 AGA_total.append(AGA)
-                for slot in self.label_slot[index]:
+                for slot in self.list_label_current_state[index]:
                     if slot.split("-")[0] in self.unseen_ketod:
                         AGA_unseen.append(AGA)
                         break
-                    if slot == self.label_slot[index][-1]:
+                    if slot == self.list_label_current_state[index][-1]:
                         AGA_seen.append(AGA)
             if len(AGA_seen) > 0 and len(AGA_unseen) > 0:
                 result = {"AGA_total": round(sum(AGA_total) / len(AGA_total) * 100, 4),

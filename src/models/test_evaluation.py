@@ -117,8 +117,8 @@ def main(args):
         else:
             item = test[i]['instruction'] \
                     .replace('{list_user_action}', test[i]['list_user_action'].strip()) \
-                    .replace('{context}', test[i]['context'].strip()) \
-                    .replace('{current_query}', test[i]['current_query'].strip()) \
+                    .replace('{history}', test[i]['history'].strip()) \
+                    .replace('{current}', test[i]['current'].strip()) \
                     .replace('{ontology}', test[i]['ontology'].strip())
         ildm = {
             "input": item,

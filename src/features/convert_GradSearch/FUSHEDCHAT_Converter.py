@@ -78,7 +78,7 @@ class FushedChatConverter(DialConverter):
             dialog_act = sub_dialogue[-1]['dialog_act']
 
             if len(dialog_act) == 0: # ODD || "dialog_act": {},
-                list_current_action.add('ASKING|general-none-none')
+                list_current_action.add('ASKING>general-none-none')
                 list_type.add("ODD")
             else:
                 for domain_action, frame in dialog_act.items():
@@ -88,7 +88,7 @@ class FushedChatConverter(DialConverter):
                     domain = domain_action[0].lower()
 
                     if domain == 'chitchat': # ODD || "dialog_act": {"chitchat": []}
-                        list_current_action.add('ASKING|general-none-none')
+                        list_current_action.add('ASKING>general-none-none')
                         list_type.add("ODD")
                     else:
                         action = domain_action[1].lower()
@@ -101,11 +101,11 @@ class FushedChatConverter(DialConverter):
                                         if slot in listslots:
                                             slot = slotstr
                                 value = slot_value[1].lower()
-                                list_current_action.add(action + "|" + domain + '-' + slot + '-' + value)
+                                list_current_action.add(action + ">" + domain + '-' + slot + '-' + value)
                             list_type.add("TOD")
 
                         else: # ODD (general-thank | general-bye | general-greet) just a state not a domain
-                            list_current_action.add(action + "|" + domain + '-none-none')
+                            list_current_action.add(action + ">" + domain + '-none-none')
                             list_type.add("ODD")
 
             metadata = sub_dialogue[-1]['metadata']
@@ -125,11 +125,14 @@ class FushedChatConverter(DialConverter):
                                     dict_state_one_dialogue.setdefault(domain, dict())
                                 if slot not in dict_state_one_dialogue[domain].keys():
                                     dict_state_one_dialogue[domain].setdefault(slot, value)
+                                    list_current_action.add("inform>" + domain + "-" + slot + "-" + value)
                                 if value != dict_state_one_dialogue[domain][slot]:
                                     dict_state_one_dialogue[domain][slot] = value
+                                    list_current_action.add("inform>" + domain + "-" + slot + "-" + value)
+
 
             for current_action in list_current_action:
-                current_action = current_action.split("|")
+                current_action = current_action.split(">")
                 action = current_action[0]
                 if action == "inform":
                     dsv = current_action[1]
@@ -150,10 +153,10 @@ class FushedChatConverter(DialConverter):
                     list_current_state.append(domain + '-' + slot + '-' + value)
 
             final_type = "TOD" if "TOD" in list_type else "ODD"
-            final_current_action = ' ~ '.join(current_action for current_action in list_current_action).lower().strip()
-            final_current_state = ' ~ '.join(current_state for current_state in list_current_state).lower().strip()
+            final_current_action = ' | '.join(current_action for current_action in list_current_action).lower().strip()
+            final_current_state = ' | '.join(current_state for current_state in list_current_state).lower().strip()
 
-            item['label'] = "<TYPE> " + final_type + " <ACTION> " + final_current_action + " <STATE> " + final_current_state
+            item['label'] = "(type) " + final_type + " (current action) " + final_current_action + " (current state) " + final_current_state
             list_sub_sample.append(item)
         return list_sub_sample
 
@@ -199,7 +202,7 @@ class FushedChatConverter(DialConverter):
         for slotstr, description_listslots in onto_mapping.items():
             tmps.append(slotstr + "=" + list(description_listslots.keys())[0])
 
-        value_onto = domain_name.upper() + "<" + ' ~ '.join(tmp for tmp in tmps) + ">"
+        value_onto = domain_name + ":[" + ', '.join(tmp for tmp in tmps) + "]"
         return value_onto, onto_mapping
         # value_onto = DOMAIN:(slot0=des0,slot1=des1,slot2=des2)
 

@@ -94,13 +94,13 @@ class SGDConverter(DialConverter):
                 for action in actions:
                     act = action["act"].lower().strip()
                     if act in ["affirm", "negate", "select", "negate_intent", "request_alts", "affirm_intent"]:
-                        list_current_action.add(act + "|" + domain + '-none-none')
+                        list_current_action.add(act + ">" + domain + '-none-none')
                         list_type.add("TOD")
                     elif act in ["thank_you"]:
-                        list_current_action.add("thank|general-none-none")
+                        list_current_action.add("thank>general-none-none")
                         list_type.add("ODD")
                     elif act in ["goodbye"]:
-                        list_current_action.add("bye|general-none-none")
+                        list_current_action.add("bye>general-none-none")
                         list_type.add("ODD")
                     else:
                         slot = action["slot"].strip().lower()
@@ -118,7 +118,7 @@ class SGDConverter(DialConverter):
                                     break
                             else:
                                 value = values[0].strip().lower()
-                        list_current_action.add(act + "|" + domain + '-' + slot + '-' + value)
+                        list_current_action.add(act + ">" + domain + '-' + slot + '-' + value)
                         list_type.add("TOD")
 
                 for slot, values in slot_values.items():
@@ -145,10 +145,10 @@ class SGDConverter(DialConverter):
                     list_current_state.append(domain + '-' + slot + '-' + value)
 
             final_type = "TOD" if "TOD" in list_type else "ODD"
-            final_current_action = ' ~ '.join(current_action for current_action in list_current_action).lower().strip()
-            final_current_state = ' ~ '.join(current_state for current_state in list_current_state).lower().strip()
+            final_current_action = ' | '.join(current_action for current_action in list_current_action).lower().strip()
+            final_current_state = ' | '.join(current_state for current_state in list_current_state).lower().strip()
 
-            item['label'] = "<TYPE> " + final_type + " <ACTION> " + final_current_action + " <STATE> " + final_current_state
+            item['label'] = "(type) " + final_type + " (current action) " + final_current_action + " (current state) " + final_current_state
             list_sub_sample.append(item)
         return list_sub_sample
 
@@ -194,7 +194,7 @@ class SGDConverter(DialConverter):
         for slotstr, description_listslots in onto_mapping.items():
             tmps.append(slotstr + "=" + list(description_listslots.keys())[0])
 
-        value_onto = domain_name.upper() + "<" + ' ~ '.join(tmp for tmp in tmps) + ">"
+        value_onto = domain_name + ":[" + ', '.join(tmp for tmp in tmps) + "]"
         return value_onto, onto_mapping
         # value_onto = DOMAIN:(slot0=des0,slot1=des1,slot2=des2)
 
