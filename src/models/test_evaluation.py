@@ -267,12 +267,9 @@ def main(args):
             del decoded_preds
             del decoded_labels
 
-    with open(args.test_files[0], 'r+') as f:
-        test = json.load(f)
-    for i in range(len(test)):
-        test[i]["preds"] = predict[i]
+
     with open(args.log_input_label_predict, 'w') as f:
-        json.dump(test, f, indent=4)
+        json.dump(predict, f, indent=4)
 
 def postprocess_text(preds, labels):
     preds = [pred.strip() for pred in preds]
