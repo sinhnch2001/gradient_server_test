@@ -2,7 +2,7 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file /kaggle/working/gradien
 	--module 'dst_tod' \
 	--model_name 'google/flan-t5-base' \
 	--test_files '/kaggle/input/interim-data/GradSearch/GradSearch_v1.1/FUSEDCHAT/test.json' \
-  --batch_size 18 \
+  --batch_size 20 \
 	--num_beams 4 \
 	--with_tracking  \
 	--path_to_save_dir '/kaggle/input/final-checkpoint-gradtod/ckpt v1/model_dst.bin'\
