@@ -267,7 +267,7 @@ def main(args):
             del decoded_preds
             del decoded_labels
 
-    with open(args.test_files, 'r+') as f:
+    with open(args.test_files[0], 'r+') as f:
         test = json.load(f)
     for i in range(len(test)):
         test[i]["preds"] = predict[i]
