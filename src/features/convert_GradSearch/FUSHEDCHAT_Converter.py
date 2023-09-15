@@ -60,6 +60,10 @@ class FushedChatConverter(DialConverter):
         dict_state_one_dialogue = dict()
         for _,sub_dialogue in enumerate(list_sub_dialogue):
             item = dict()
+            list_current_state = list()
+            list_current_action = list()
+            dict_action_one_turn = dict()
+            list_type = set()
 
             # get context, current_user, instruction, list_user_action and ontology
             list_turn = []
@@ -74,11 +78,13 @@ class FushedChatConverter(DialConverter):
             item['ontology'] = ' || '.join(gold_domain for gold_domain in list_gold_domain).strip()
 
             # get type, current_state and current_action
-            list_type, list_current_state, list_current_action = set(), list(), set()
             dialog_act = sub_dialogue[-1]['dialog_act']
 
             if len(dialog_act) == 0: # ODD || "dialog_act": {},
-                list_current_action.add('ASKING>general-none-none')
+                if "ASKING" not in dict_action_one_turn.keys():
+                    dict_action_one_turn.setdefault("ASKING", {})
+                dict_action_one_turn["ASKING"].setdefault("general", {})
+                dict_action_one_turn["ASKING"]["general"].setdefault("none", "none")
                 list_type.add("ODD")
             else:
                 for domain_action, frame in dialog_act.items():
@@ -88,32 +94,42 @@ class FushedChatConverter(DialConverter):
                     domain = domain_action[0].lower()
 
                     if domain == 'chitchat': # ODD || "dialog_act": {"chitchat": []}
-                        list_current_action.add('ASKING>general-none-none')
+                        if "asking" not in dict_action_one_turn.keys():
+                            dict_action_one_turn.setdefault("asking",dict())
+                        dict_action_one_turn["asking"].setdefault("general",dict())
+                        dict_action_one_turn["asking"]["general"].setdefault("none", "none")
                         list_type.add("ODD")
                     else:
                         action = domain_action[1].lower()
+                        if action not in dict_action_one_turn.keys():
+                            dict_action_one_turn.setdefault(action, dict())
+                        dict_action_one_turn[action].setdefault(domain, dict())
                         if domain in list_woz_domain: # TOD
-                            onto_mapping = self.map_ontology(domain, list_ontology)
-                            for slot_value in frame:
-                                slot = slot_value[0].lower()
-                                for slotstr, description_listslots in onto_mapping.items():
-                                    for description, listslots in description_listslots.items():
-                                        if slot in listslots:
-                                            slot = slotstr
-                                value = slot_value[1].lower()
-                                list_current_action.add(action + ">" + domain + '-' + slot + '-' + value)
+                            if len(frame) == 0:
+                                dict_action_one_turn[action][domain].setdefault("none", "none")
+                            else:
+                                for slot_value in frame:
+                                    slot = slot_value[0].lower()
+                                    onto_mapping = self.map_ontology(domain, list_ontology)
+                                    for slotstr, description_listslots in onto_mapping.items():
+                                        for description, listslots in description_listslots.items():
+                                            if slot in listslots:
+                                                slot = slotstr
+                                    value = slot_value[1].lower()
+
+                                    dict_action_one_turn[action][domain].setdefault(slot, value)
                             list_type.add("TOD")
 
                         else: # ODD (general-thank | general-bye | general-greet) just a state not a domain
-                            list_current_action.add(action + ">" + domain + '-none-none')
+                            dict_action_one_turn[action][domain].setdefault("none", "none")
                             list_type.add("ODD")
 
             metadata = sub_dialogue[-1]['metadata']
             for domain, state in metadata.items():
-                onto_mapping = self.map_ontology(domain, list_ontology)
                 for dict_slot_value in state.values():
                     for slot, value in dict_slot_value.items():
                         if value not in ["", "not mentioned"] and slot != "booked":
+                            onto_mapping = self.map_ontology(domain, list_ontology)
                             for slotstr, description_listslots in onto_mapping.items():
                                 for description, listslots in description_listslots.items():
                                     if slot.lower() in listslots:
@@ -122,35 +138,39 @@ class FushedChatConverter(DialConverter):
                                 domain = "train"
                             if domain != "bus":
                                 if domain not in dict_state_one_dialogue.keys():
-                                    dict_state_one_dialogue.setdefault(domain, dict())
-                                if slot not in dict_state_one_dialogue[domain].keys():
-                                    dict_state_one_dialogue[domain].setdefault(slot, value)
-                                    list_current_action.add("inform>" + domain + "-" + slot + "-" + value)
-                                if value != dict_state_one_dialogue[domain][slot]:
-                                    dict_state_one_dialogue[domain][slot] = value
-                                    list_current_action.add("inform>" + domain + "-" + slot + "-" + value)
+                                    if "inform" not in dict_action_one_turn.keys():
+                                        dict_action_one_turn.setdefault("inform", dict())
+                                    if domain not in dict_action_one_turn["inform"].keys():
+                                        dict_action_one_turn["inform"].setdefault(domain, dict())
+                                    if slot not in dict_action_one_turn["inform"][domain].keys():
+                                        dict_action_one_turn["inform"][domain].setdefault(slot, value)
+                                else:
+                                    if slot not in dict_state_one_dialogue[domain].keys():
+                                        if "inform" not in dict_action_one_turn.keys():
+                                            dict_action_one_turn.setdefault("inform", dict())
+                                        if domain not in dict_action_one_turn["inform"].keys():
+                                            dict_action_one_turn["inform"].setdefault(domain, dict())
+                                        if slot not in dict_action_one_turn["inform"][domain].keys():
+                                            dict_action_one_turn["inform"][domain].setdefault(slot, value)
 
-
-            for current_action in list_current_action:
-                current_action = current_action.split(">")
-                action = current_action[0]
-                if action == "inform":
-                    dsv = current_action[1]
-                    dsv = dsv.split("-")
-                    domain = dsv[0]
-                    slot = dsv[1]
-                    value = dsv[2]
-                    if slot != "none" and value != "none":
-                        if domain not in dict_state_one_dialogue.keys():
-                            dict_state_one_dialogue.setdefault(domain, dict())
-                        if slot not in dict_state_one_dialogue[domain].keys():
-                            dict_state_one_dialogue[domain].setdefault(slot, value)
-                        if value != dict_state_one_dialogue[domain][slot]:
+            if "inform" in  dict_action_one_turn.keys():
+                for domain, dict_slot_value in dict_action_one_turn["inform"].items():
+                    if domain not in dict_state_one_dialogue.keys():
+                        dict_state_one_dialogue.setdefault(domain, dict())
+                    for slot, value in dict_slot_value.items():
+                        if slot != "none" and value != "none":
+                            if slot not in dict_state_one_dialogue[domain].keys():
+                                dict_state_one_dialogue[domain].setdefault(slot, "")
                             dict_state_one_dialogue[domain][slot] = value
 
             for domain, dict_slot_value in dict_state_one_dialogue.items():
                 for slot, value in dict_slot_value.items():
                     list_current_state.append(domain + '-' + slot + '-' + value)
+
+            for action, dict_domain_slot_value in dict_action_one_turn.items():
+                for domain, dict_slot_value in dict_domain_slot_value.items():
+                    for slot, value in dict_slot_value.items():
+                        list_current_action.append(action + '>' + domain + '-' + slot + '-' + value)
 
             final_type = "TOD" if "TOD" in list_type else "ODD"
             final_current_action = ' | '.join(current_action for current_action in list_current_action).lower().strip()
@@ -225,7 +245,7 @@ if __name__ == '__main__':
     # TEST
     fusedchat_converter = FushedChatConverter(
         file_path=r'C:\ALL\OJT\SERVER\gradient_server_test\data\data raw\FUSEDCHAT',
-        save_path=r'C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\FUSEDCHAT').__call__(
+        save_path=r'C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\GradSearch_v2\FUSEDCHAT').__call__(
         instruction_path=r"C:\ALL\OJT\SERVER\gradient_server_test\data\instructions\instruct_GradSearch.txt",
         ontolopy_path=r"C:\ALL\OJT\SERVER\gradient_server_test\data\schema guided\schema.json")
 

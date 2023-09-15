@@ -187,7 +187,6 @@ def parse_args(args):
     return args
 
 def main(args):
-    label = []
     predict = []
     args = parse_args(args)
     tokenizer = AutoTokenizer.from_pretrained(args.model_name)
@@ -264,19 +263,16 @@ def main(args):
             decoded_labels = tokenizer.batch_decode(labels, skip_special_tokens=True)
             decoded_preds, decoded_labels = postprocess_text(decoded_preds, decoded_labels)
 
-            label = label + decoded_labels
             predict = predict + decoded_preds
             del decoded_preds
             del decoded_labels
-    ld_list = []
-    for i in range(len(label)):
-        ld = {
-            "label": label[i],
-            "predict": predict[i]
-        }
-        ld_list.append(ld)
+
+    with open(args.test_files, 'r+') as f:
+        test = json.load(f)
+    for i in range(len(test)):
+        test[i]["preds"] = predict[i]
     with open(args.log_input_label_predict, 'w') as f:
-        json.dump(ld_list, f, indent=4)
+        json.dump(test, f, indent=4)
 
 def postprocess_text(preds, labels):
     preds = [pred.strip() for pred in preds]
