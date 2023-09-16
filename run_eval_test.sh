@@ -6,4 +6,4 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file /kaggle/working/gradien
 	--num_beams 4 \
 	--with_tracking  \
 	--path_to_save_dir '/kaggle/input/final-checkpoint-gradtod/ckpt v1/model_dst.bin'\
-	--log_input_label_predict '/kaggle/working/FUSEDCHAT_164_sample.json'
+	--log_input_label_predict '/kaggle/working/FUSEDCHAT_166_sample.json'
