@@ -1,6 +1,6 @@
 export NCCL_DEBUG=INFO
-
-CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file src/config/config_fsdp_t5.yaml src/models/train.py        \
+!WANDB_API_KEY=74956cec51ca7a4366d903f2f3aecba161707d82 CUDA_VISIBLE_DEVICES=0,1 accelerate launch
+        --config_file src/config/config_fsdp_t5.yaml src/models/train.py \
         --module 'dst' \
         --model_name "google/flan-t5-base" \
         --max_target_length 400 \
