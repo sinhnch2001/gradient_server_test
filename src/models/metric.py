@@ -12,7 +12,30 @@ import json
 from datasets import DownloadConfig
 from sklearn.metrics import f1_score
 
-def formatstring(label):
+def formatstring_v1(label):
+    dict_state = dict()
+    list_domain_action = label.split(" || ")
+    for domain_action in list_domain_action:
+        domain_action = domain_action.split(":[")
+        domain = domain_action[0].strip().lower()
+        if domain in list_woz_domain:
+            if domain not in dict_state.keys():
+                dict_state.setdefault(domain, {})
+            list_action = domain_action[1][:-2].split(") and ")
+            for action in list_action:
+                if "inform(slot" in action or "inform(choice" in action:
+                    slot_value = action.replace("inform(", "").split("=")
+                    slot = slot_value[0]
+                    value = slot_value[1]
+                    if slot not in dict_state[domain].keys():
+                        dict_state[domain].setdefault(slot, value)
+                    if value != dict_state[domain][slot]:
+                        dict_state[domain][slot] = value
+    for domain, dict_slot_value in dict_state.items():
+        for slot, value in dict_slot_value.items():
+            list_current_state.append(domain + '-' + slot + '-' + value)
+    return list_current_state
+def formatstring_v2(label):
     # Split the string at '||' and create a list of slots_of_domains
     # "(type) TOD (current action) negate>restaurants_2-none-none | thank>general-none-none (current state) restaurants_2-slot10-sfo | restaurants_2-slot0-namu gaji | restaurants_2-slot2-1 pm | restaurants_2-slot1-march 1st | restaurants_2-slot8-2"
 
@@ -23,7 +46,7 @@ def formatstring(label):
     current_action_state = type_current[1].split('(current state)')
     # [" negate>restaurants_2-none-none | thank>general-none-none ", " restaurants_2-slot10-sfo | restaurants_2-slot0-namu gaji | restaurants_2-slot2-1 pm | restaurants_2-slot1-march 1st | restaurants_2-slot8-2"]
 
-    current_action = current_action_state[0].split("|")
+    current_action = current_action_state[0].split("||")
     # [" negate>restaurants_2-none-none ", " thank>general-none-none "]
 
     current_state = current_action_state[1].split("|")
@@ -78,15 +101,19 @@ class Metric:
                 self.label_slot.append(decoded_labels[i])
         else:
             for i in range(len(decoded_preds)):
-                predict_type, predict_current_action, predict_current_state = formatstring(decoded_preds[i])
-                label_type  , label_current_action  , label_current_state   = formatstring(decoded_labels[i])
+                if "v1" in self.metric_name:
+                    predict_current_action = formatstring_v1(decoded_preds[i])
+                    label_current_action   = formatstring_v1(decoded_labels[i])
+                if "v2" in self.metric_name:
+                    predict_type, predict_current_action, predict_current_state = formatstring_v2(decoded_preds[i])
+                    label_type  , label_current_action  , label_current_state   = formatstring_v2(decoded_labels[i])
+                    self.list_predict_type.append(predict_type)
+                    self.list_label_type.append(label_type)
+                    self.list_predict_current_state.append(predict_current_state)
+                    self.list_label_current_state.append(label_current_state)
 
-                self.list_predict_type.append(predict_type)
                 self.list_predict_current_action.append(predict_current_action)
-                self.list_predict_current_state.append(predict_current_state)
-                self.list_label_type.append(label_type)
                 self.list_label_current_action.append(label_current_action)
-                self.list_label_current_state.append(label_current_state)
 
     def compute(self):
         if self.metric_name == "rouge":
