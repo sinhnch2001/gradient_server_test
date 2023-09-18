@@ -18,4 +18,5 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch \
         --report_to wandb \
         --checkpointing_steps epoch \
         --do_eval_per_epoch \
-        --max_train_samples 500
+        --max_train_samples 500 \
+        --max_eval_samples 100
