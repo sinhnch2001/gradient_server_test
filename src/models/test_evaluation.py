@@ -166,7 +166,7 @@ def parse_args(args):
     parser.add_argument('--model_name', type=str, default="google/flan-t5-small", help="model name")
     parser.add_argument('--path_to_save_dir', type=str, help="Path to the save directory json file")
     parser.add_argument('--log_input_label_predict', type=str, help="Path to the save directory json file")
-    parser.add_argument('--max_target_length', type=int, default=80, help="Max target length")
+    parser.add_argument('--max_target_length', type=int, default=400, help="Max target length")
     parser.add_argument('--batch_size', type=int, default=8, help="Batch size for the dataloader")
     parser.add_argument('--seed', type=int, default=42, help="A seed for reproducible training.")
     parser.add_argument('--num_beams', type=int, default=4, help="number of beams")
