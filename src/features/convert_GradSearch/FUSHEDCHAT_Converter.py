@@ -8,9 +8,7 @@ from src.features.converter import DialConverter
 
 sys.path.append('/content/drive/MyDrive/Colab Notebooks/baseline_v1/gradients.baselinev1.dialogstate')
 list_woz_domain = ['taxi', 'police', 'hospital', 'hotel', 'attraction', 'train', 'restaurant']
-list_user_action = ['INFORM', 'REQUEST','INFORM_INTENT','NEGATE_INTENT',
-                    'AFFIRM_INTENT', 'AFFIRM','NEGATE','SELECT','THANK',
-                    'BYE','GREET','ASKING','REQUEST_ALTS']
+list_user_action = ['INFORM', 'REQUEST','NEGATE','THANK', 'BYE','GREET','ASKING','REQUEST_ALTS']
 
 class FushedChatConverter(DialConverter):
     def __init__(self,
@@ -42,7 +40,8 @@ class FushedChatConverter(DialConverter):
 
             list_all_sample = []
             # Analyze all dialogues
-            for dialogue in dataset.values():
+            for id, dialogue in dataset.items():
+
                 # get summarize dialogue
                 list_gold_domain = self.get_list_gold_domain(dialogue, list_ontology)
                 # process dialogue into sub-dialogues
@@ -51,19 +50,19 @@ class FushedChatConverter(DialConverter):
                     if i % 2 == 0:
                         list_sub_dialogue.append(dialogue['log'][0:i+1])
                 # process raw list_sub_dialogue to interim list_sub_sample
-                list_sub_sample = self.get_list_sub_sample(list_sub_dialogue, list_gold_domain, list_ontology, list_instruction)
+                list_sub_sample = self.get_list_sub_sample(id, list_sub_dialogue, list_gold_domain, list_ontology, list_instruction)
                 list_all_sample.extend(list_sub_sample)
             self.save_datapath(list_all_sample, filename)
 
-    def get_list_sub_sample(self, list_sub_dialogue, list_gold_domain, list_ontology, list_instruction):
+    def get_list_sub_sample(self, id, list_sub_dialogue, list_gold_domain, list_ontology, list_instruction):
         list_sub_sample = []
         dict_state_one_dialogue = dict()
-        for _,sub_dialogue in enumerate(list_sub_dialogue):
+        for id_turn, sub_dialogue in enumerate(list_sub_dialogue):
             item = dict()
             list_current_state = list()
             list_current_action = list()
+            set_type = set()
             dict_action_one_turn = dict()
-            list_type = set()
 
             # get context, current_user, instruction, list_user_action and ontology
             list_turn = []
@@ -72,20 +71,22 @@ class FushedChatConverter(DialConverter):
                 list_turn.append(speaker + ": " + turn['text'])
 
             item['instruction'] = self.get_instruction(list_instruction).strip()
-            item['history'] = ' '.join([list_turn[i].strip() for i in range(len(list_turn)-1)]).strip()
-            item['current'] = list_turn[-1].strip()
             item['list_user_action'] = '[' + ', '.join(action.lower() for action in list_user_action) + ']'
             item['ontology'] = ' || '.join(gold_domain for gold_domain in list_gold_domain).strip()
+            item['history'] = ' '.join([list_turn[i].strip() for i in range(len(list_turn)-1)]).strip()
+            item['current'] = list_turn[-1].strip()
+            item['id_dialogue'] = id
+            item['id_turn'] = id_turn*2 + 1
 
             # get type, current_state and current_action
             dialog_act = sub_dialogue[-1]['dialog_act']
 
             if len(dialog_act) == 0: # ODD || "dialog_act": {},
-                if "ASKING" not in dict_action_one_turn.keys():
-                    dict_action_one_turn.setdefault("ASKING", {})
-                dict_action_one_turn["ASKING"].setdefault("general", {})
-                dict_action_one_turn["ASKING"]["general"].setdefault("none", "none")
-                list_type.add("ODD")
+                if "asking" not in dict_action_one_turn.keys():
+                    dict_action_one_turn.setdefault("asking", {})
+                dict_action_one_turn["asking"].setdefault("general", {})
+                dict_action_one_turn["asking"]["general"].setdefault("none", "none")
+                set_type.add("odd")
             else:
                 for domain_action, frame in dialog_act.items():
                     # domain_action: domain | action
@@ -98,31 +99,32 @@ class FushedChatConverter(DialConverter):
                             dict_action_one_turn.setdefault("asking",dict())
                         dict_action_one_turn["asking"].setdefault("general",dict())
                         dict_action_one_turn["asking"]["general"].setdefault("none", "none")
-                        list_type.add("ODD")
+                        set_type.add("odd")
                     else:
                         action = domain_action[1].lower()
                         if action not in dict_action_one_turn.keys():
                             dict_action_one_turn.setdefault(action, dict())
                         dict_action_one_turn[action].setdefault(domain, dict())
                         if domain in list_woz_domain: # TOD
-                            if len(frame) == 0:
-                                dict_action_one_turn[action][domain].setdefault("none", "none")
-                            else:
-                                for slot_value in frame:
-                                    slot = slot_value[0].lower()
-                                    onto_mapping = self.map_ontology(domain, list_ontology)
-                                    for slotstr, description_listslots in onto_mapping.items():
-                                        for description, listslots in description_listslots.items():
-                                            if slot in listslots:
-                                                slot = slotstr
-                                    value = slot_value[1].lower()
+                            if domain in item['ontology']:
+                                if len(frame) == 0:
+                                    dict_action_one_turn[action][domain].setdefault("none", "none")
+                                else:
+                                    for slot_value in frame:
+                                        slot = slot_value[0].lower()
+                                        onto_mapping = self.map_ontology(domain, list_ontology)
+                                        for slot_digit, description_listslots in onto_mapping.items():
+                                            for description, listslots in description_listslots.items():
+                                                if slot in listslots:
+                                                    slot = slot_digit
+                                        value = slot_value[1].lower()
 
-                                    dict_action_one_turn[action][domain].setdefault(slot, value)
-                            list_type.add("TOD")
+                                        dict_action_one_turn[action][domain].setdefault(slot, value)
+                                set_type.add("tod")
 
                         else: # ODD (general-thank | general-bye | general-greet) just a state not a domain
                             dict_action_one_turn[action][domain].setdefault("none", "none")
-                            list_type.add("ODD")
+                            set_type.add("odd")
 
             metadata = sub_dialogue[-1]['metadata']
             for domain, state in metadata.items():
@@ -130,13 +132,13 @@ class FushedChatConverter(DialConverter):
                     for slot, value in dict_slot_value.items():
                         if value not in ["", "not mentioned"] and slot != "booked":
                             onto_mapping = self.map_ontology(domain, list_ontology)
-                            for slotstr, description_listslots in onto_mapping.items():
+                            for slot_digit, description_listslots in onto_mapping.items():
                                 for description, listslots in description_listslots.items():
                                     if slot.lower() in listslots:
-                                        slot = slotstr
+                                        slot = slot_digit
                             if domain == "bus" and "TRAIN" in item['ontology']:
                                 domain = "train"
-                            if domain != "bus":
+                            if domain != "bus" and domain in item['ontology']:
                                 if domain not in dict_state_one_dialogue.keys():
                                     if "inform" not in dict_action_one_turn.keys():
                                         dict_action_one_turn.setdefault("inform", dict())
@@ -153,15 +155,16 @@ class FushedChatConverter(DialConverter):
                                         if slot not in dict_action_one_turn["inform"][domain].keys():
                                             dict_action_one_turn["inform"][domain].setdefault(slot, value)
 
-            if "inform" in  dict_action_one_turn.keys():
+            if "inform" in dict_action_one_turn.keys():
                 for domain, dict_slot_value in dict_action_one_turn["inform"].items():
-                    if domain not in dict_state_one_dialogue.keys():
-                        dict_state_one_dialogue.setdefault(domain, dict())
-                    for slot, value in dict_slot_value.items():
-                        if slot != "none" and value != "none":
-                            if slot not in dict_state_one_dialogue[domain].keys():
-                                dict_state_one_dialogue[domain].setdefault(slot, "")
-                            dict_state_one_dialogue[domain][slot] = value
+                    if domain in list_woz_domain:
+                        if domain not in dict_state_one_dialogue.keys():
+                            dict_state_one_dialogue.setdefault(domain, dict())
+                        for slot, value in dict_slot_value.items():
+                            if slot != "none" and value != "none":
+                                if slot not in dict_state_one_dialogue[domain].keys():
+                                    dict_state_one_dialogue[domain].setdefault(slot, "")
+                                dict_state_one_dialogue[domain][slot] = value
 
             for domain, dict_slot_value in dict_state_one_dialogue.items():
                 for slot, value in dict_slot_value.items():
@@ -172,11 +175,19 @@ class FushedChatConverter(DialConverter):
                     for slot, value in dict_slot_value.items():
                         list_current_action.append(action + '>' + domain + '-' + slot + '-' + value)
 
-            final_type = "TOD" if "TOD" in list_type else "ODD"
-            final_current_action = ' | '.join(current_action for current_action in list_current_action).lower().strip()
-            final_current_state = ' | '.join(current_state for current_state in list_current_state).lower().strip()
+            final_type = "tod" if "tod" in set_type else "odd"
 
-            item['label'] = "(type) " + final_type + " (current action) " + final_current_action + " (current state) " + final_current_state
+            if len(list_current_action)>0:
+                final_current_action = ' || '.join(current_action for current_action in list_current_action).lower().strip()
+            else:
+                final_current_action = "asking>general-none-none"
+
+            if len(list_current_state) > 0:
+                final_current_state = ' || '.join(current_state for current_state in list_current_state).lower().strip()
+            else:
+                final_current_state = "nothing"
+
+            item['label'] = "(type) " + final_type + " (current action) " + final_current_action.replace("dont care", "dontcare") + " (current state) " + final_current_state.replace("dont care", "dontcare")
             list_sub_sample.append(item)
         return list_sub_sample
 
