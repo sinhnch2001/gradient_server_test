@@ -1,13 +1,10 @@
-import argparse
 import json
 import logging
 import math
 import os
-import numpy as np
 import torch
 import time
 from functools import wraps
-from pathlib import Path
 from typing import Set, Optional, Union
 from typing_extensions import Literal
 from torch.utils.data.dataloader import DataLoader
@@ -16,8 +13,6 @@ from tqdm.auto import tqdm
 # Transformers
 import transformers
 import datasets
-import evaluate
-import accelerate.utils
 from transformers import (
     CONFIG_MAPPING,
     MODEL_MAPPING,
@@ -30,7 +25,7 @@ from evaluation import Evaluation
 from accelerate import Accelerator
 from accelerate.logging import get_logger
 from accelerate.utils import set_seed  # reproducability across devices
-from accelerate.utils import DistributedType
+from accelerate.utils import DistributedType, ProjectConfiguration
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP, StateDictType, FullStateDictConfig
 
 
@@ -58,7 +53,7 @@ class Trainer:
                  module: str,
                  output_dir: str,
                  dataloaders: Set[DataLoader],
-                 max_target_length: Optional[int] = 40,
+                 max_target_length: Optional[int] = 100,
                  ignore_pad_token_for_loss: bool = True,
                  num_beams: Optional[int] = 4,
                  config_name: Optional[str] = None,
@@ -124,7 +119,7 @@ class Trainer:
         if self.with_tracking:
             accelerator_log_kwargs["log_with"] = self.report_to
             accelerator_log_kwargs["project_dir"] = self.output_dir
-
+        
         accelerator = Accelerator(gradient_accumulation_steps=self.gradient_accumulation_steps,
                                   **accelerator_log_kwargs)
 
@@ -241,7 +236,7 @@ class Trainer:
                     name = name + str(i)
                     i+=1
         # Metric
-        
+
         metrics = ['rouge', 'bleu']
         evaluator = Evaluation(eval_dataloaders = dataloaders['eval'],
                                ignore_pad_token_for_loss = self.ignore_pad_token_for_loss,
@@ -297,7 +292,7 @@ class Trainer:
             if self.with_tracking:
                 total_loss = 0
             for step, batch in enumerate(dataloaders['train']):
-                print(batch)
+
                 # We need to skip steps until we reach the resumed step
                 if self.resume_from_checkpoint and epoch == starting_epoch:
                     if resume_step is not None and step < resume_step:
@@ -309,6 +304,7 @@ class Trainer:
                 with accelerator.accumulate(model):
                     outputs = model(**batch)
                     loss = outputs.loss
+                    #print("Loss: ", loss.device, loss)
                     # We keep track of the loss at each epoch
                     accelerator.backward(loss)
                     optimizer.step()
@@ -331,13 +327,13 @@ class Trainer:
                     break
 
             # Eval per epoch
-            
+
             if self.do_eval_per_epoch:
                 if self.with_tracking:
                     result, total_loss_eval = evaluator.eval(accelerator=accelerator,
                                                              tokenizer=tokenizer, model=model)
                     eval_loss_tmp = total_loss_eval.item() / len(self.dataloaders['eval'])
-                    
+
                     # accelerator.log({"validation_loss": float(total_loss_eval)}, step=completed_steps)
                 else:
                     result = evaluator.eval(accelerator=accelerator,
@@ -351,14 +347,14 @@ class Trainer:
                         result["eval_loss"] = eval_loss_tmp
                         rougeLSum_scores.append(result['rougeLsum'])
 
-                        # log 
+                        # log
                         accelerator.log({'eval loss': float(result['eval_loss'])}, step=completed_steps)
                         accelerator.log({'rougeLsum': float(result['rougeLsum'])}, step=completed_steps)
                         accelerator.log({'rougeL': float(result['rougeL'])}, step=completed_steps)
                         accelerator.log({'rouge2': float(result['rouge2'])}, step=completed_steps)
                         accelerator.log({'rouge1': float(result['rouge1'])}, step=completed_steps)
                         accelerator.log({'bleu': float(result['bleu'])},step=completed_steps)
-                        
+
 
                         logger.info(f"*** TRAINING LOSS AT EPOCH {epoch} ***")
                         logger.info(result["train_loss"])
@@ -395,20 +391,15 @@ class Trainer:
 
             accelerator.wait_for_everyone()
             if self.checkpointing_steps == "epoch":
-                logger.info(f"***** Saving checkpoint at epoch {epoch} *****")
+                logger.info(f"====== Saving checkpoint at epoch {epoch} ======")
                 self.save_ckpt(accelerator,checkpointing_steps=self.checkpointing_steps,epoch=epoch)
-                
                 if float(eval_loss_tmp) < float(self.check_loss):
-                #    if os.path.exists(self.output_dir + 'best_ckpt'):
-                #        os.rmdir(self.output_dir + 'best_ckpt')
-                #    self.save_ckpt(accelerator, checkpointing_steps=self.checkpointing_steps, opt_type='best', epoch=epoch)
                     with open(os.path.join(self.output_dir, 'log.txt'), 'a+') as file:
                         file.write(f"Best checkpoint at epoch: {epoch} \n")
-                    
                     self.check_loss = float(eval_loss_tmp)
-                    #logger.info(f"----- Best loss at epoch {epoch} ----")
             logger.info(f"ENDING EPOCH: {epoch} on process " + str(accelerator.process_index))
-
+            accelerator.wait_for_everyone()
+            
         if self.with_tracking:
            accelerator.end_training()
 
@@ -424,6 +415,8 @@ class Trainer:
             else:
                 state = accelerator.get_state_dict(model)
             self.save(accelerator, unwrapped_model, tokenizer, result, state)
+            
+
 
     def save(self, accelerator, unwrapped_model, tokenizer, result, state):
         unwrapped_model.save_pretrained(
@@ -437,9 +430,7 @@ class Trainer:
                 json.dump(all_results, f)
 
     def save_ckpt(self, accelerator, checkpointing_steps, opt_type='normal', epoch=None, completed_steps=None):
-        #accelerator.wait_for_everyone()
         if checkpointing_steps == "epoch":
-            #logger.info(f"***** Saving best checkpoint at epoch {epoch} *****")
             output_dir = f"best_ckpt" if opt_type=='best' else f"epoch_{epoch}"
             if self.output_dir is not None:
                 output_dir = os.path.join(self.output_dir, output_dir)
@@ -517,15 +508,3 @@ class Trainer:
             )
 
         return model, optimizer, dataloaders, lr_scheduler
-
-
-
-
-
-
-
-
-
-
-
-
