@@ -2,12 +2,12 @@ export NCCL_DEBUG=INFO
 
 CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file src/config/config_fsdp_t5.yaml src/models/train.py        \
         --module 'dst' \
-        --model_name "google/flan-t5-small" \
+        --model_name "google/flan-t5-base" \
         --max_target_length 400 \
-        --num_train_epochs 5 \
-        --output_dir "./output/GradSearch1309/"  \
-        --train_files  "./data/interim/GradSearch/SGD/train.json" "./data/interim/GradSearch/FUSEDCHAT/train.json" \
-        --val_files   "./data/interim/GradSearch/SGD/val.json" "./data/interim/GradSearch/FUSEDCHAT/val.json" \
+        --num_train_epochs 1 \
+        --output_dir "/kaggle/working/GradSearch1809/"  \
+        --train_files  "/kaggle/input/gradsearch-v2-pro/GradSearch_v2/SGD/train.json" "/kaggle/input/gradsearch-v2-pro/GradSearch_v2/FUSEDCHAT/train.json" \
+        --val_files   "/kaggle/input/gradsearch-v2-pro/GradSearch_v2/SGD/val.json" "/kaggle/input/gradsearch-v2-pro/GradSearch_v2/FUSEDCHAT/val.json" \
         --batch_size  8 \
         --num_beams   4 \
         --weight_decay  0.3 \
@@ -17,4 +17,4 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch --config_file src/config/config_fsdp_
         --report_to wandb \
         --checkpointing_steps epoch \
         --do_eval_per_epoch \
-	--max_eval_samples 100
+        --max_train_samples 500
