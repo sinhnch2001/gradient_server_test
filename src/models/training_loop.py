@@ -53,7 +53,7 @@ class Trainer:
                  module: str,
                  output_dir: str,
                  dataloaders: Set[DataLoader],
-                 max_target_length: Optional[int] = 100,
+                 max_target_length: Optional[int] = 400,
                  ignore_pad_token_for_loss: bool = True,
                  num_beams: Optional[int] = 4,
                  config_name: Optional[str] = None,
@@ -292,7 +292,7 @@ class Trainer:
             if self.with_tracking:
                 total_loss = 0
             for step, batch in enumerate(dataloaders['train']):
-
+                print(batch)
                 # We need to skip steps until we reach the resumed step
                 if self.resume_from_checkpoint and epoch == starting_epoch:
                     if resume_step is not None and step < resume_step:

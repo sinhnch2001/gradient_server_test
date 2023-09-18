@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12ec4de6-2de4-4aa4-a3e9-102ca5d97aa1" name="Changes" comment="bla">
-      <change beforePath="$PROJECT_DIR$/.idea/gradients.baselinev1.dialogstate.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradients.baselinev1.dialogstate.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_training_dst.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run_training_dst.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/metric.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/metric.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/training_loop.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/training_loop.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +46,6 @@
     <setting file="file://$PROJECT_DIR$/src/features/convert_GradSearch/FUSHEDCHAT_Converter.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/features/convert_GradSearch/MW21_Converter.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/features/convert_GradSearch/SGD_Converter.py" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/models/decode_test_to_evaluate.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/models/evaluation.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/models/metric.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/models/module 2/DM.py" root0="SKIP_INSPECTION" />
@@ -208,27 +204,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1687557857877</updated>
-    </task>
-    <task id="LOCAL-00051" summary="bla">
-      <created>1694140835772</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1694140835772</updated>
-    </task>
-    <task id="LOCAL-00052" summary="bla">
-      <created>1694142946454</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1694142946454</updated>
-    </task>
-    <task id="LOCAL-00053" summary="bla">
-      <created>1694144867765</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1694144867765</updated>
     </task>
     <task id="LOCAL-00054" summary="bla">
       <created>1694146908637</created>
@@ -552,7 +527,28 @@
       <option name="project" value="LOCAL" />
       <updated>1695038208744</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="bla">
+      <created>1695048703330</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1695048703332</updated>
+    </task>
+    <task id="LOCAL-00101" summary="bla">
+      <created>1695048718831</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1695048718833</updated>
+    </task>
+    <task id="LOCAL-00102" summary="bla">
+      <created>1695048829457</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1695048829457</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
