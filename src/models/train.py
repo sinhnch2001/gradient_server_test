@@ -1,7 +1,8 @@
 import sys
 import os
 import argparse
-sys.path.insert(0,'/home/tiennv/nvtien/dialogstate') #Add root directory here
+# sys.path.insert(0,'/home/tiennv/nvtien/dialogstate') #Add root directory here
+sys.path.insert(0,r'./')
 
 from src.data.dataloader_GradRes import ResDataLoader
 from src.data.dataloader_GradSearch import StateDataLoader
