@@ -9,7 +9,7 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch \
         --output_dir "/kaggle/working/GradSearch1809/"  \
         --train_files  "/kaggle/input/gradsearch-v2-pro/GradSearch_v2/SGD/train.json" "/kaggle/input/gradsearch-v2-pro/GradSearch_v2/FUSEDCHAT/train.json" \
         --val_files   "/kaggle/input/gradsearch-v2-pro/GradSearch_v2/SGD/val.json" "/kaggle/input/gradsearch-v2-pro/GradSearch_v2/FUSEDCHAT/val.json" \
-        --batch_size  8 \
+        --batch_size  2 \
         --num_beams   4 \
         --weight_decay  0.3 \
         --learning_rate 2e-5 \
