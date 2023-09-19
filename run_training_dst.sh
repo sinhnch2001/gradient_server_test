@@ -13,7 +13,7 @@ CUDA_VISIBLE_DEVICES=0,1 accelerate launch \
         --num_beams   4 \
         --weight_decay  0.3 \
         --learning_rate 2e-5 \
-        --gradient_accumulation_steps 16 \
+        --gradient_accumulation_steps 1 \
         --with_tracking  \
         --report_to wandb \
         --checkpointing_steps epoch \
