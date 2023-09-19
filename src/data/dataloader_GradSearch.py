@@ -115,13 +115,13 @@ class StateDataLoader:
 
         inp_tokens = self.tokenizer.batch_encode_plus(
             inputs,
-            padding=True,
+            padding="longest",
             return_tensors="pt",
             truncation=True,
         )
         tgt_tokens = self.tokenizer.batch_encode_plus(
             targets,
-            padding=True,
+            padding="longest",
             return_tensors="pt",
             truncation=True,
         )
