@@ -117,13 +117,11 @@ class StateDataLoader:
             inputs,
             padding="longest",
             return_tensors="pt",
-            truncation=True,
         )
         tgt_tokens = self.tokenizer.batch_encode_plus(
             targets,
             padding="longest",
             return_tensors="pt",
-            truncation=True,
         )
         target_ids = tgt_tokens["input_ids"]
         target_mask = tgt_tokens["attention_mask"].bool()
