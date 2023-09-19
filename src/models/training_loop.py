@@ -292,7 +292,7 @@ class Trainer:
             if self.with_tracking:
                 total_loss = 0
             for step, batch in enumerate(dataloaders['train']):
-                print(len(batch["input_ids"]))
+                print([len(batch["input_ids"][i]) for i in len(batch["input_ids"])])
                 # We need to skip steps until we reach the resumed step
                 if self.resume_from_checkpoint and epoch == starting_epoch:
                     if resume_step is not None and step < resume_step:
