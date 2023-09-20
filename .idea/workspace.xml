@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12ec4de6-2de4-4aa4-a3e9-102ca5d97aa1" name="Changes" comment="bla">
-      <change beforePath="$PROJECT_DIR$/src/data/dataloader_GradSearch.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/dataloader_GradSearch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,28 +80,7 @@
       <recent name="C:\ALL\OJT\server\gradient_server_test\src\models\module 2" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.add predict state (2)">
-    <configuration name="add predict state (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="gradients.baselinev1.dialogstate" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v2/SGD/support for data" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v2/SGD/support for data/add predict state.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.merge_data">
     <configuration name="add predict state (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="gradients.baselinev1.dialogstate" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -144,6 +123,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="check size sample" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="gradients.baselinev1.dialogstate" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/data interim/GradSearch" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/data interim/GradSearch/check size sample.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="check_gold_and_dict_state (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="gradients.baselinev1.dialogstate" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -165,7 +165,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="check_gold_and_dict_state" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="merge_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="gradients.baselinev1.dialogstate" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -173,11 +173,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v2/SGD/support for data" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/data raw/SGD/support for data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v2/SGD/support for data/check_gold_and_dict_state.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/data raw/SGD/support for data/merge_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -188,11 +188,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.merge_data" />
+        <item itemvalue="Python.check size sample" />
         <item itemvalue="Python.add predict state (2)" />
         <item itemvalue="Python.add_action_predict" />
         <item itemvalue="Python.check_gold_and_dict_state (2)" />
-        <item itemvalue="Python.check_gold_and_dict_state" />
-        <item itemvalue="Python.add predict state (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -204,20 +204,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1687557857877</updated>
-    </task>
-    <task id="LOCAL-00078" summary="bla">
-      <created>1694607219961</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1694607219961</updated>
-    </task>
-    <task id="LOCAL-00079" summary="bla">
-      <created>1694608893097</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1694608893097</updated>
     </task>
     <task id="LOCAL-00080" summary="bla">
       <created>1694609538846</created>
@@ -548,7 +534,21 @@
       <option name="project" value="LOCAL" />
       <updated>1695088797259</updated>
     </task>
-    <option name="localTasksCounter" value="127" />
+    <task id="LOCAL-00127" summary="bla">
+      <created>1695088938411</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1695088938411</updated>
+    </task>
+    <task id="LOCAL-00128" summary="bla">
+      <created>1695089115503</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1695089115503</updated>
+    </task>
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

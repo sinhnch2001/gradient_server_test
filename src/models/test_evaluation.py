@@ -169,7 +169,7 @@ def parse_args(args):
     parser.add_argument('--max_target_length', type=int, default=400, help="Max target length")
     parser.add_argument('--batch_size', type=int, default=8, help="Batch size for the dataloader")
     parser.add_argument('--seed', type=int, default=42, help="A seed for reproducible training.")
-    parser.add_argument('--num_beams', type=int, default=4, help="number of beams")
+    parser.add_argument('--num_beams', type=int, default=1, help="number of beams")
     parser.add_argument('--gradient_accumulation_steps', type=int, default=1,
                         help="Number of updates steps to accumulate before performing a backward/update pass.")
     parser.add_argument('--with_tracking', action='store_true',
