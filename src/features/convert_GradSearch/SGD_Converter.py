@@ -7,12 +7,12 @@ from typing import List, Dict, Union, Optional
 from src.features.converter import DialConverter
 
 sys.path.append('/content/drive/MyDrive/Colab Notebooks/baseline_v1/gradients.baselinev1.dialogstate')
-list_sgd_domain = ['buses_1', 'buses_2', 'buses_3', 'calendar_1', 'events_1', 'events_2', 'events_3',
-                   'flights_1', 'flights_2', 'flights_4', 'homes_1', 'homes_2', 'hotels_1', 'hotels_2',
-                   'hotels_3', 'hotels_4', 'media_1', 'media_3', 'messaging_1', 'movies_1', 'movies_3',
+list_sgd_domain = ['buses_1', 'buses_2', 'buses_3', 'calendar_1', 'events_1', 'events_2', 'events_3', 'flights_3',
+                   'flights_1', 'flights_2', 'flights_4', 'homes_1', 'homes_2', 'hotels_1', 'hotels_2', 'banks_2',
+                   'hotels_3', 'hotels_4', 'media_1', 'media_3', 'messaging_1', 'movies_1', 'movies_3', 'movies_2',
                    'music_1', 'music_2', 'music_3', 'payment_1', 'rentalcars_1', 'rentalcars_2', 'rentalcars_3',
-                   'restaurants_1', 'restaurants_2', 'ridesharing_1', 'ridesharing_2', 'services_1',
-                   'services_2', 'services_3', 'services_4', 'trains_1', 'travel_1', 'weather_1']
+                   'restaurants_1', 'restaurants_2', 'ridesharing_1', 'ridesharing_2', 'services_1', 'banks_1',
+                   'services_2', 'services_3', 'services_4', 'trains_1', 'travel_1', 'weather_1', 'alarm_1', 'media_2']
 
 list_user_action = ['INFORM', 'REQUEST','NEGATE','THANK', 'BYE','GREET','ASKING','REQUEST_ALTS']
 
@@ -64,6 +64,7 @@ class SGDConverter(DialConverter):
     def get_list_sub_sample(self, id, list_sub_dialogue, list_gold_domain, list_ontology, list_instruction):
         list_sub_sample = []
         dict_state_one_dialogue = dict()
+        current_values = set()
         for id_turn, sub_dialogue in enumerate(list_sub_dialogue):
             item = dict()
             list_current_state = list()
@@ -79,7 +80,7 @@ class SGDConverter(DialConverter):
 
             item['instruction'] = self.get_instruction(list_instruction).strip()
             item['list_user_action'] = '[' + ', '.join(action.lower() for action in list_user_action) + ']'
-            item['ontology'] = ' || '.join(gold_domain for gold_domain in list_gold_domain).strip()
+            item['ontology'] = ' & '.join(gold_domain for gold_domain in list_gold_domain).strip()
             item['history'] = ' '.join([list_turn[i].strip() for i in range(len(list_turn)-1)]).strip()
             item['current'] = list_turn[-1].strip()
             item['id_dialogue'] = id
@@ -87,6 +88,8 @@ class SGDConverter(DialConverter):
 
             # get type, current_state and current_action
             frames = sub_dialogue[-1]['frames']
+            if len(sub_dialogue)>1:
+                system_frames = sub_dialogue[-2]['frames']
 
             for frame in frames:
                 domain = frame["service"].lower()
@@ -106,6 +109,7 @@ class SGDConverter(DialConverter):
                             dict_action_one_turn[act].setdefault(domain, dict())
                         dict_action_one_turn[act][domain].setdefault("none", "none")
                         set_type.add("tod")
+
                     elif act in ["thank_you"]:
                         if "thank" not in dict_action_one_turn.keys():
                             dict_action_one_turn.setdefault("thank", dict())
@@ -113,6 +117,7 @@ class SGDConverter(DialConverter):
                             dict_action_one_turn["thank"].setdefault("general", dict())
                         dict_action_one_turn["thank"]["general"].setdefault("none", "none")
                         set_type.add("odd")
+
                     elif act in ["goodbye"]:
                         if "bye" not in dict_action_one_turn.keys():
                             dict_action_one_turn.setdefault("bye", dict())
@@ -120,8 +125,10 @@ class SGDConverter(DialConverter):
                             dict_action_one_turn["bye"].setdefault("general", dict())
                         dict_action_one_turn["bye"]["general"].setdefault("none", "none")
                         set_type.add("odd")
+
                     elif act in ["select", "affirm"]:
                         pass
+
                     elif act in ["affirm_intent", "inform_intent"]:
                         if "inform" not in dict_action_one_turn.keys():
                             dict_action_one_turn.setdefault("inform", dict())
@@ -129,22 +136,16 @@ class SGDConverter(DialConverter):
                             dict_action_one_turn["inform"].setdefault(domain, dict())
                         dict_action_one_turn["inform"][domain].setdefault("none", "none")
                         set_type.add("tod")
+
                     else:
                         slot = action["slot"].strip().lower()
                         for slotstr, description_listslots in onto_mapping.items():
                             for description, listslots in description_listslots.items():
                                 if slot in listslots:
                                     slot = slotstr
-                        if act == "request":
-                            value = "?"
-                        else:
-                            values = action["values"]
-                            for v in values:
-                                if v.lower() in item['current']:
-                                    value = v.strip().lower()
-                                    break
-                            else:
-                                value = values[0].strip().lower()
+                        value = "?" if act == "request" else action["values"][0].lower()
+                        if value not in ["?", "none"]:
+                            current_values.add(value)
                         if act not in dict_action_one_turn.keys():
                             dict_action_one_turn.setdefault(act, dict())
                         if domain not in dict_action_one_turn[act].keys():
@@ -160,32 +161,36 @@ class SGDConverter(DialConverter):
                         for description, listslots in description_listslots.items():
                             if slot.lower() in listslots:
                                 slot = slotstr
-                    for v in values:
-                        if v.lower() in item['current']:
-                            value = v.strip().lower()
-                            break
-                    else:
-                        value = values[0].strip().lower()
-
-                    if domain not in dict_state_one_dialogue.keys():
+                    values = list(set(map(str.lower, values)))
+                    values = sorted(values, key=lambda str: len(str),reverse=True)
+                    if domain not in dict_state_one_dialogue.keys() or slot not in dict_state_one_dialogue[domain].keys():
+                        if len(values)>1:
+                            for v in values:
+                                if v in item["current"].lower():
+                                    value = v
+                                    current_values.add(value)
+                                    break
+                            else:
+                                for v in values:
+                                    if v in item["history"].lower().split("SYSTEM")[-1]:
+                                        value = v
+                                        current_values.add(value)
+                                        break
+                                else:
+                                    for v in values:
+                                        if v in current_values:
+                                            value = v
+                                            break
+                        else:
+                            value = values[0]
+                            current_values.add(value)
                         if "inform" not in dict_action_one_turn.keys():
                             dict_action_one_turn.setdefault("inform", dict())
                         if domain not in dict_action_one_turn["inform"].keys():
                             dict_action_one_turn["inform"].setdefault(domain, dict())
                         if slot not in dict_action_one_turn["inform"][domain].keys():
                             dict_action_one_turn["inform"][domain].setdefault(slot, value)
-                        if value != dict_action_one_turn["inform"][domain][slot]:
-                            dict_action_one_turn["inform"][domain][slot] = value
-                    else:
-                        if slot not in dict_state_one_dialogue[domain].keys():
-                            if "inform" not in dict_action_one_turn.keys():
-                                dict_action_one_turn.setdefault("inform", dict())
-                            if domain not in dict_action_one_turn["inform"].keys():
-                                dict_action_one_turn["inform"].setdefault(domain, dict())
-                            if slot not in dict_action_one_turn["inform"][domain].keys():
-                                dict_action_one_turn["inform"][domain].setdefault(slot, value)
-                            if value != dict_action_one_turn["inform"][domain][slot]:
-                                dict_action_one_turn["inform"][domain][slot] = value
+                        set_type.add("tod")
 
             if "inform" in dict_action_one_turn.keys():
                 for domain, dict_slot_value in dict_action_one_turn["inform"].items():
@@ -197,6 +202,41 @@ class SGDConverter(DialConverter):
                                 if slot not in dict_state_one_dialogue[domain].keys():
                                     dict_state_one_dialogue[domain].setdefault(slot, "")
                                 dict_state_one_dialogue[domain][slot] = value
+            if len(sub_dialogue) > 1:
+                for system_frame in system_frames:
+                    domain = system_frame["service"].lower()
+                    onto_mapping = self.map_ontology(domain, list_ontology)
+                    actions = system_frame["actions"]
+                    for action in actions:
+                        if len(action["values"])==1:
+                            slot = action["slot"].lower().strip()
+                            for slotstr, description_listslots in onto_mapping.items():
+                                for description, listslots in description_listslots.items():
+                                    if slot.lower() in listslots:
+                                        slot = slotstr
+                            value = action["values"][0].lower().strip()
+                            if domain in dict_state_one_dialogue.keys():
+                                if slot in dict_state_one_dialogue[domain].keys():
+                                    if "inform" in dict_action_one_turn.keys() and domain in dict_action_one_turn["inform"].keys():
+                                        if slot not in dict_action_one_turn["inform"][domain].keys():
+                                            dict_state_one_dialogue[domain][slot] = value
+                                    else:
+                                        dict_state_one_dialogue[domain][slot] = value
+                                else:
+                                    frames = sub_dialogue[-1]['frames']
+                                    for frame in frames:
+                                        actions = frame["actions"]
+                                        for action in actions:
+                                            act = action["act"].lower().strip()
+                                            if act in ["affirm", "select"]:
+                                                dict_state_one_dialogue[domain][slot] = value
+                                                if "inform" not in dict_action_one_turn.keys():
+                                                    dict_action_one_turn.setdefault("inform", dict())
+                                                if domain not in dict_action_one_turn["inform"].keys():
+                                                    dict_action_one_turn["inform"].setdefault(domain, dict())
+                                                if slot not in dict_action_one_turn["inform"][domain].keys():
+                                                    dict_action_one_turn["inform"][domain].setdefault(slot, value)
+                                                set_type.add("tod")
 
             for domain, dict_slot_value in dict_state_one_dialogue.items():
                 for slot, value in dict_slot_value.items():
@@ -204,6 +244,8 @@ class SGDConverter(DialConverter):
 
             for action, dict_domain_slot_value in dict_action_one_turn.items():
                 for domain, dict_slot_value in dict_domain_slot_value.items():
+                    if "none" in dict_slot_value.keys() and len(dict_slot_value.keys()) > 1:
+                        del dict_slot_value["none"]
                     for slot, value in dict_slot_value.items():
                         list_current_action.append(action + '>' + domain + '-' + slot + '-' + value)
 
@@ -266,7 +308,7 @@ class SGDConverter(DialConverter):
         for slotstr, description_listslots in onto_mapping.items():
             tmps.append(slotstr + "=" + list(description_listslots.keys())[0])
 
-        value_onto = domain_name + ":[" + ', '.join(tmp for tmp in tmps) + "]"
+        value_onto = domain_name + ":[" + ' | '.join(tmp for tmp in tmps) + "]"
         return value_onto, onto_mapping
         # value_onto = DOMAIN:(slot0=des0,slot1=des1,slot2=des2)
 

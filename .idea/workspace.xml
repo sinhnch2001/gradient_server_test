@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="12ec4de6-2de4-4aa4-a3e9-102ca5d97aa1" name="Changes" comment="bla">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/instructions/instruct_GradSearch.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/instructions/instruct_GradSearch.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/convert_GradSearch/FUSHEDCHAT_Converter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/convert_GradSearch/FUSHEDCHAT_Converter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/convert_GradSearch/SGD_Converter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/convert_GradSearch/SGD_Converter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,25 +67,26 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/ALL/OJT/SERVER/gradient_server_test/data/data interim/GradSearch/GradSearch_v2/FUSEDCHAT/support for data&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/ALL/OJT/SERVER/gradient_server_test/data/data interim/GradSearch/GradSearch_v2/GradSearch_v2&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\GradSearch_v2\GradSearch_v2" />
       <recent name="C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\GradSearch_v2\FUSEDCHAT\support for data" />
       <recent name="C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\GradSearch_v2\SGD\support for data" />
       <recent name="C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\GradSearch_v1.1\FUSEDCHAT\support for data" />
       <recent name="C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\SGD" />
-      <recent name="C:\ALL\OJT\server\gradient_server_test\src\models\module 2" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\GradSearch_v2\FUSEDCHAT\support for data" />
+      <recent name="C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\GradSearch_v2\GradSearch_v2" />
       <recent name="C:\ALL\OJT\SERVER\gradient_server_test\data\data interim\GradSearch\GradSearch_v1.1\FUSEDCHAT" />
       <recent name="C:\ALL\OJT\server\gradient_server_test\src\models\module 2" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.merge_data">
-    <configuration name="add predict state (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.FUSHEDCHAT_Converter">
+    <configuration name="FUSHEDCHAT_Converter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="gradients.baselinev1.dialogstate" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -89,32 +94,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Downloads/GradSearch/FUSEDCHAT" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$USER_HOME$/Downloads/GradSearch/FUSEDCHAT/add predict state.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="add_action_predict" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="gradients.baselinev1.dialogstate" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v1.1/FUSEDCHAT/support for data" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/features/convert_GradSearch" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v1.1/FUSEDCHAT/support for data/add_action_predict.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/features/convert_GradSearch/FUSHEDCHAT_Converter.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -123,7 +107,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="check size sample" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="SGD_Converter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="gradients.baselinev1.dialogstate" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -131,11 +115,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/data interim/GradSearch" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/features/convert_GradSearch" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/data interim/GradSearch/check size sample.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/features/convert_GradSearch/SGD_Converter.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -144,7 +128,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="check_gold_and_dict_state (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="add predict state" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="gradients.baselinev1.dialogstate" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -152,32 +136,53 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Downloads/GradSearch/FUSEDCHAT" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$USER_HOME$/Downloads/GradSearch/FUSEDCHAT/check_gold_and_dict_state.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="merge_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="gradients.baselinev1.dialogstate" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/data raw/SGD/support for data" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v2/GradSearch_v2" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/data raw/SGD/support for data/merge_data.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v2/GradSearch_v2/add predict state.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="add_action_predict (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="gradients.baselinev1.dialogstate" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v2/GradSearch_v2" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v2/GradSearch_v2/add_action_predict.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="check_gold_and_dict_state" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="gradients.baselinev1.dialogstate" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v2/GradSearch_v2" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/data interim/GradSearch/GradSearch_v2/GradSearch_v2/check_gold_and_dict_state.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -188,11 +193,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.merge_data" />
-        <item itemvalue="Python.check size sample" />
-        <item itemvalue="Python.add predict state (2)" />
-        <item itemvalue="Python.add_action_predict" />
-        <item itemvalue="Python.check_gold_and_dict_state (2)" />
+        <item itemvalue="Python.FUSHEDCHAT_Converter" />
+        <item itemvalue="Python.SGD_Converter" />
+        <item itemvalue="Python.add_action_predict (1)" />
+        <item itemvalue="Python.add predict state" />
+        <item itemvalue="Python.check_gold_and_dict_state" />
       </list>
     </recent_temporary>
   </component>
@@ -204,13 +209,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1687557857877</updated>
-    </task>
-    <task id="LOCAL-00086" summary="bla">
-      <created>1694789439418</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1694789439418</updated>
     </task>
     <task id="LOCAL-00087" summary="bla">
       <created>1694789586717</created>
@@ -548,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695206323456</updated>
     </task>
-    <option name="localTasksCounter" value="135" />
+    <task id="LOCAL-00135" summary="bla">
+      <created>1695207320677</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1695207320677</updated>
+    </task>
+    <option name="localTasksCounter" value="136" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

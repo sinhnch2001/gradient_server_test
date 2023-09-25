@@ -72,7 +72,7 @@ class FushedChatConverter(DialConverter):
 
             item['instruction'] = self.get_instruction(list_instruction).strip()
             item['list_user_action'] = '[' + ', '.join(action.lower() for action in list_user_action) + ']'
-            item['ontology'] = ' || '.join(gold_domain for gold_domain in list_gold_domain).strip()
+            item['ontology'] = ' & '.join(gold_domain for gold_domain in list_gold_domain).strip()
             item['history'] = ' '.join([list_turn[i].strip() for i in range(len(list_turn)-1)]).strip()
             item['current'] = list_turn[-1].strip()
             item['id_dialogue'] = id
@@ -233,7 +233,7 @@ class FushedChatConverter(DialConverter):
         for slotstr, description_listslots in onto_mapping.items():
             tmps.append(slotstr + "=" + list(description_listslots.keys())[0])
 
-        value_onto = domain_name + ":[" + ', '.join(tmp for tmp in tmps) + "]"
+        value_onto = domain_name + ":[" + ' | '.join(tmp for tmp in tmps) + "]"
         return value_onto, onto_mapping
         # value_onto = DOMAIN:(slot0=des0,slot1=des1,slot2=des2)
 
